@@ -19,12 +19,20 @@ html {
     background-color: var(--color1);
 }
 
+section{
+    padding: 3% 0;
+}
+
 .body-box {
     padding: 2% 1%;
+    background-image: url('../assets/fondo-2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .header-background {
-    background-image: url('../fondo-2.png');
+    background-image: url('../assets/fondo-1.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -32,6 +40,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .header-content {
@@ -39,6 +48,13 @@ html {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 20px;
     border-radius: 5px;
+    color: var(--color5);
+}
+
+.header-buttons {
+    position: absolute;
+    top: 20px;
+    right: 30px;
 }
 
 .header-content h1 {
@@ -60,63 +76,6 @@ html {
     flex-direction: row-reverse;
 }
 
-/*perfil*/
-.profile-grid {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    gap: 20px;
-    align-items: center;
-    padding: 3% 0;
-    color: var(--color5);
-}
-
-.profile-img-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    order: 2;
-  }
-
-.profile-img {
-    max-width: 80%;
-}
-
-.profile-info h1 {
-    font-size: 3.5em;
-    text-align: center;
-    order: 1;
-}
-
-.profile-info h2 {
-    font-size: 2.2em;
-}
-
-.profile-info p {
-    font-size: 1.2em;
-    text-align: center;
-}
-
-.profile-info h1,
-.profile-info h2,
-.profile-info p {
-    margin: 15px 0;
-    padding: 1%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Media query para pantallas semi-medianas */
-@media (max-width: 968px) {
-    /*perfil*/
-    .profile-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .profile-img{
-        max-width: 80%;
-    }
-}
-
 /* Media query para pantallas medianas */
 @media (max-width: 768px) {
     .header-background{
@@ -128,20 +87,6 @@ html {
     .header-content p {
         font-size: 0.85em;
     }
-
-    /*perfil*/
-    .profile-grid {
-        grid-template-columns: 1fr;
-    }
-    .profile-img-container{
-        order: 1;
-    }
-    .profile-img{
-        max-width: 50%;
-    }
-    .profile-info{
-        order: 2;
-    }
 }
 
 /* Media query para pantallas pequeñas */
@@ -152,10 +97,5 @@ html {
 
     .header-content p {
         font-size: 0.8em;
-    }
-
-    /*perfil*/
-    .profile-img{
-        max-width: 70%;
     }
 }
