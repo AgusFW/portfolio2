@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+:root {
+    --color1:  #0F1832;
+    --color2: #D8D1CB;
+    --color3: #3F489B;
+    --color4: #000;
+    --color5: #fff;
+}
+
+body,
+html {
+    height: 100%;
+    background-color: var(--color1);
+}
+
+.body-box {
+    padding: 2% 1%;
+}
+
+.header-background {
+    background-image: url('../fondo-2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-content {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.header-content h1 {
+    font-size: 5em;
+    margin-bottom: 4%;
+}
+
+.header-content p {
+    color: var(--color4);
+    font-size: 1em;
+    background-color: var(--color5);
+    padding: 0.75%;
+    border-radius: 10px;
+    width: 40%;
+}
+
+.header-content div {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+/*perfil*/
+.profile-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 20px;
+    align-items: center;
+    padding: 3% 0;
+    color: var(--color5);
+}
+
+.profile-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    order: 2;
+  }
+
+.profile-img {
+    max-width: 80%;
+}
+
+.profile-info h1 {
+    font-size: 3.5em;
+    text-align: center;
+    order: 1;
+}
+
+.profile-info h2 {
+    font-size: 2.2em;
+}
+
+.profile-info p {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.profile-info h1,
+.profile-info h2,
+.profile-info p {
+    margin: 15px 0;
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Media query para pantallas semi-medianas */
+@media (max-width: 968px) {
+    /*perfil*/
+    .profile-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .profile-img{
+        max-width: 80%;
+    }
+}
+
+/* Media query para pantallas medianas */
+@media (max-width: 768px) {
+    .header-background{
+        height: 100vh;
+    }
+    .header-content h1 {
+        font-size: 4em;
+    }
+    .header-content p {
+        font-size: 0.85em;
+    }
+
+    /*perfil*/
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+    .profile-img-container{
+        order: 1;
+    }
+    .profile-img{
+        max-width: 50%;
+    }
+    .profile-info{
+        order: 2;
+    }
+}
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 480px) {
+    .header-content h1 {
+        font-size: 3.7em;
+    }
+
+    .header-content p {
+        font-size: 0.8em;
+    }
+
+    /*perfil*/
+    .profile-img{
+        max-width: 70%;
+    }
+}

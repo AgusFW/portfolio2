@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <title>Agustina Witis Portfolio</title>
+</head>
+
+<body class="animate__animated animate__fadeIn">
+
+    <header class="header-background">
+        <div class="header-content">
+            <h1>Agustina Witis</h1>
+            <div>
+                <p>Full Stack Developer</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="body-box">
+        <!--perfil-->
+        <section>
+            <div class="profile-grid">
+                <div class="profile-info">
+                    <h1 id="profile-name">Nombre del Perfil</h1>
+                    <h2 id="profile-title">Título del Perfil</h2>
+                    <p id="profile-description">Descripción del Perfil</p>
+                    <p id="profile-skills">Habilidades del Perfil</p>
+                    <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#editModal">
+                        Editar
+                    </button>
+                </div>
+                <div class="profile-img-container">
+                    <img src="./assets/foto-perfil2.png" alt="Profile Image" class="profile-img">
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal de Bootstrap para editar el perfil -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Editar Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm">
+                        <label for="editNombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control mb-3" id="editNombre" name="nombre">
+
+                        <label for="editTitulo" class="form-label">Título:</label>
+                        <input type="text" class="form-control mb-3" id="editTitulo" name="titulo">
+
+                        <label for="editPerfil" class="form-label">Perfil:</label>
+                        <textarea class="form-control mb-3" id="editPerfil" name="perfil" rows="5"></textarea>
+
+                        <label for="editSkills" class="form-label">Skills:</label>
+                        <textarea class="form-control" id="editSkills" name="skills" rows="3"></textarea>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-success" id="saveChangesBtn">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Bootstrap JS y dependencia popper-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
+        integrity="sha512-FolTrWj6UFrQnylgp/x9zNJb2W8dDnF2t0YO2y0TpWuvCZG2Ilx7TJ9ItNfYw8ZscDQ1C8N5rGll5PmsCHDXBcg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- JavaScript para manejar la carga y actualización del perfil -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            const editProfileForm = document.getElementById('editProfileForm');
+            const profileName = document.getElementById('profile-name');
+            const profileTitle = document.getElementById('profile-title');
+            const profileDescription = document.getElementById('profile-description');
+            const profileSkills = document.getElementById('profile-skills');
+
+            // Función para cargar el perfil
+            async function fetchProfileData() {
+                try {
+                    const response = await fetch(`/perfil/1`);
+                    if (!response.ok) {
+                        throw new Error('Perfil no encontrado');
+                    }
+                    const perfil = await response.json();
+                    // Llenar los datos del perfil en la página
+                    profileName.innerText = perfil.nombre;
+                    profileTitle.innerText = perfil.titulo;
+                    profileDescription.innerText = perfil.perfil;
+                    profileSkills.innerText = perfil.skills;
+                } catch (error) {
+                    console.error('Error al cargar el perfil:', error);
+                }
+            }
+
+            // Evento al abrir el modal de edición
+            document.getElementById('editModal').addEventListener('show.bs.modal', async () => {
+                try {
+                    // Cargar los datos del perfil en el formulario de edición
+                    const response = await fetch(`/perfil/1`); // Aquí se hace el fetch a /perfil/1
+                    if (!response.ok) {
+                        throw new Error('Perfil no encontrado');
+                    }
+                    const perfil = await response.json();
+                    // Llenar el formulario con los datos del perfil
+                    document.getElementById('editNombre').value = perfil.nombre;
+                    document.getElementById('editTitulo').value = perfil.titulo;
+                    document.getElementById('editPerfil').value = perfil.perfil;
+                    document.getElementById('editSkills').value = perfil.skills;
+                } catch (error) {
+                    console.error('Error al cargar el perfil:', error);
+                }
+            });
+
+            // Evento al cerrar el modal de edición
+            document.getElementById('editModal').addEventListener('hidden.bs.modal', () => {
+                editProfileForm.reset(); // Limpiar el formulario al cerrar el modal
+            });
+
+            // Evento para guardar los cambios del formulario de edición
+            document.getElementById('saveChangesBtn').addEventListener('click', async () => {
+                const nombre = document.getElementById('editNombre').value;
+                const titulo = document.getElementById('editTitulo').value;
+                const perfil = document.getElementById('editPerfil').value;
+                const skills = document.getElementById('editSkills').value;
+
+                try {
+                    const response = await fetch(`/perfil/1`, { // Aquí se hace el fetch a /perfil/1
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ nombre, titulo, perfil, skills })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error al actualizar el perfil');
+                    }
+
+                    const updatedPerfil = await response.json();
+                    // Actualizar los datos mostrados en la página
+                    profileName.innerText = updatedPerfil.nombre;
+                    profileTitle.innerText = updatedPerfil.titulo;
+                    profileDescription.innerText = updatedPerfil.perfil;
+                    profileSkills.innerText = updatedPerfil.skills;
+                    // Cerrar el modal
+                    editModal.hide();
+                } catch (error) {
+                    console.error('Error al actualizar el perfil:', error);
+                }
+            });
+
+            // Cargar datos del perfil al cargar la página
+            await fetchProfileData(); // Llamada a fetchProfileData sin argumentos
+        });
+    </script>
+</body>
+
+</html>
