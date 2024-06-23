@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Evento al cerrar el modal de edición
     document.getElementById('editModal').addEventListener('hidden.bs.modal', () => {
-        editProfileForm.reset(); // Limpiar el formulario
+        editProfileForm.reset();
     });
 
     // Evento para guardar los cambios del formulario de edición

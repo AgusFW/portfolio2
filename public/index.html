@@ -90,9 +90,75 @@
         </div>
 
         <!-----------------------------------------EXPERIENCIA----------------------------------------------------------->
+        <div class="experiencia-titulo">
+            <h1>Experiencia Laboral</h1>
+        </div>
         <section id="experiencias-section" class="experiencia-section">
             <!-- Aquí se cargarán las cards de experiencias -->
         </section>
+
+        <!-- Modal para mostrar experiencia -->
+        <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Contenido del modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar experiencia -->
+        <div class="modal fade" id="editExperienciaModal" tabindex="-1" aria-labelledby="editExperienciaModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editExperienciaModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editExperienciaForm">
+                            <label for="editExpTitulo" class="form-label">Titulo:</label>
+                            <input type="text" class="form-control mb-3" id="editExpTitulo" name="titulo">                            
+
+                            <label for="editPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="editPeriodo" name="periodo">
+
+                            <label for="editLenguajes" class="form-label">Lenguajes:</label>
+                            <textarea class="form-control" id="editLenguajes" name="lenguajes" rows="3"></textarea>
+
+                            <label for="editDescripcion" class="form-label">Descripcion:</label>
+                            <textarea class="form-control mb-3" id="editDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="editModalidad" class="form-label">Modalidad:</label>
+                            <input type="text" class="form-control mb-3" id="editModalidad" name="modalidad">
+
+                            <label for="editUrl" class="form-label">URL:</label>
+                            <input type="text" class="form-control mb-3" id="editUrl" name="url">
+
+                            <label for="editGithube" class="form-label">GitHube:</label>
+                            <input type="text" class="form-control mb-3" id="editGithube" name="githube">
+
+                            <label for="editImg" class="form-label">Img:</label>
+                            <input type="text" class="form-control mb-3" id="editImg" name="img">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success" id="saveChangesBtnModalExp">Guardar
+                            Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
 

@@ -198,7 +198,7 @@ app.get('/experiencia/:id', async (req, res) => {
 app.put('/experiencia/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube } = req.body;
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
 
     if (!titulo || !periodo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
@@ -206,8 +206,8 @@ app.put('/experiencia/:id', async (req, res) => {
 
     const connection = await pool.getConnection();
     const [result] = await connection.query(
-      'UPDATE experiencia SET titulo = ?, periodo = ?, descripcion = ?, modalidad = ?, url = ?, lenguajes = ?, githube = ? WHERE _id = ?',
-      [titulo, periodo, descripcion, modalidad, url, lenguajes, githube, id]
+      'UPDATE experiencia SET titulo = ?, periodo = ?, descripcion = ?, modalidad = ?, url = ?, lenguajes = ?, githube = ?, img = ? WHERE _id = ?',
+      [titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img, id]
     );
     connection.release();
 
@@ -215,7 +215,7 @@ app.put('/experiencia/:id', async (req, res) => {
       return res.status(404).json({ message: 'Perfil no encontrado' });
     }
 
-    res.json({ message: 'Perfil actualizado correctamente', id, titulo, periodo, descripcion, modalidad, url, lenguajes, githube });
+    res.json({ message: 'Perfil actualizado correctamente', id, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
   } catch (err) {
     if (err.code === 'ER_BAD_FIELD_ERROR') {
       res.status(400).json({ message: 'Error en los campos enviados' });
