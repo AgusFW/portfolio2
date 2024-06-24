@@ -43,6 +43,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Función para borrar una experiencia por ID
+    async function deleteExperiencia(id) {
+        try {
+            const response = await fetch(`/experiencia/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al eliminar la experiencia');
+            }
+
+            const experiencias = await fetchExperiencias();
+            renderExperiencias(experiencias);
+        } catch (error) {
+            console.error('Error al eliminar la experiencia:', error);
+        }
+    }
+
+
     // Función para construir las cards de cada experiencia
     function renderExperiencias(experiencias) {
         experienciasSection.innerHTML = '';
@@ -62,6 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p class="card-text">${experiencia.lenguajes}</p>
                         <button type="button" class="btn btn-secondary btn-sm view-more-btn" data-id="${experiencia._id}">Ver Más</button>
                         <button type="button" class="btn btn-outline-secondary btn-sm edit-btn" data-id="${experiencia._id}">Editar</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-btn" data-id="${experiencia._id}">Borrar</button>
                     </div>
                 </div>
             `;
@@ -90,6 +110,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (experiencia) {
                     renderEditModalContent(experiencia);
                     editModal.show();
+                }
+            });
+        });
+
+        // Agregar evento de clic a todos los botones "Borrar"
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const experienciaId = event.target.getAttribute('data-id');
+                const confirmacion = confirm('¿Estás seguro que deseas eliminar esta experiencia?');
+                if (confirmacion) {
+                    await deleteExperiencia(experienciaId);
                 }
             });
         });
@@ -150,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const experiencias = await fetchExperiencias();
-            renderExperiencias(experiencias); 
+            renderExperiencias(experiencias);
             editModal.hide();
         } catch (error) {
             console.error('Error al actualizar la experiencia:', error);

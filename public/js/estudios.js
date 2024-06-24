@@ -2,11 +2,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const estudiosSection = document.getElementById('estudios-section');
     const viewModalEstudios = new bootstrap.Modal(document.getElementById('viewModalestudios'));
     const editEstudiosModal = new bootstrap.Modal(document.getElementById('editEstudiosModal'));
+    const newEstudioModal = new bootstrap.Modal(document.getElementById('newEstudioModal'));
 
     const viewModalEstudiosLabel = document.getElementById('viewModalEstudiosLabel');
     const viewModalEstudiosBody = document.querySelector('#viewModalestudios .body-estudios');
     const editEstudiosModalLabel = document.getElementById('editEstudiosModalLabel');
     const saveChangesBtnModalEst = document.getElementById('saveChangesBtnModalEst');
+    const newEstudioBtn = document.getElementById('newEstudioBtn');
+    const saveNewEstudioBtn = document.getElementById('saveNewEstudioBtn');
 
     let currentEstudioId = null;
 
@@ -147,6 +150,43 @@ document.addEventListener('DOMContentLoaded', async () => {
             editEstudiosModal.hide();
         } catch (error) {
             console.error('Error al actualizar la experiencia:', error);
+        }
+    });
+
+     // Evento para abrir el modal de nueva experiencia
+     newEstudioBtn.addEventListener('click', () => {
+        newEstudioModal.show();
+    });
+
+    // Evento para guardar la nueva experiencia
+    saveNewEstudioBtn.addEventListener('click', async () => {
+        const newEstudio = {
+            titulo: document.getElementById('newEstTitulo').value,
+            periodo: document.getElementById('newEstPeriodo').value,
+            lenguajes: document.getElementById('newEstLenguajes').value,
+            descripcion: document.getElementById('newEstDescripcion').value,
+            certificado: document.getElementById('newEstCerti').value,
+            img: document.getElementById('newEstImg').value
+        };
+
+        try {
+            const response = await fetch(`/estudio`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newEstudio)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al agregar el estudio');
+            }
+
+            const estudios = await fetchEstudios();
+            renderEstudios(estudios);
+            newEstudioModal.hide();
+        } catch (error) {
+            console.error('Error al agregar la experiencia:', error);
         }
     });
 

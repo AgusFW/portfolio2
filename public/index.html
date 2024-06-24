@@ -180,7 +180,7 @@
                             <input type="text" class="form-control mb-3" id="newExpPeriodo" name="periodo">
 
                             <label for="newExpModalidad" class="form-label">Modalidad:</label>
-                            <input type="text" class="form-control mb-3" id="newExpModalidad" name="periodo">
+                            <input type="text" class="form-control mb-3" id="newExpModalidad" name="modalidad">
 
                             <label for="newExpLenguajes" class="form-label">Tecnologías:</label>
                             <input type="text" class="form-control mb-3" id="newExpLenguajes" name="lenguajes">
@@ -213,6 +213,9 @@
         <section id="estudios-section" class="estudios-section">
             <!-- Aquí se cargarán las cards de estudios -->
         </section>
+        <div class="estudio-nuevo-btn">
+            <button type="button" class="btn btn-outline-light" id="newEstudioBtn">Nuevo Estudio</button>
+        </div>
 
         <!-- Modal para mostrar estudios -->
         <div class="modal fade modal-lg" id="viewModalestudios" tabindex="-1" aria-labelledby="viewModalEstudiosLabel"
@@ -271,6 +274,45 @@
             </div>
         </div>
 
+        <!-- Modal para agregar nuevo estudio -->
+        <div class="modal fade" id="newEstudioModal" tabindex="-1" aria-labelledby="newEstudioModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newEstudioModalLabel">Nuevo Estudio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newEstudioForm">
+                            <label for="newEstTitulo" class="form-label">Título:</label>
+                            <input type="text" class="form-control mb-3" id="newEstTitulo" name="titulo">
+
+                            <label for="newEstPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="newEstPeriodo" name="periodo">
+
+                            <label for="newEstDescripcion" class="form-label">Descripción:</label>
+                            <textarea class="form-control mb-3" id="newEstDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="newEstLenguajes" class="form-label">Tecnologías:</label>
+                            <input type="text" class="form-control mb-3" id="newEstLenguajes" name="lenguajes">
+
+                            <label for="newEstCerti" class="form-label">Certificado:</label>
+                            <input type="text" class="form-control mb-3" id="newEstCerti" name="certificado">
+
+                            <label for="newEstImg" class="form-label">Imagen:</label>
+                            <input type="text" class="form-control mb-3" id="newEstImg" name="img">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success"
+                            id="saveNewEstudioBtn">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 

@@ -226,6 +226,26 @@ app.put('/experiencia/:id', async (req, res) => {
   }
 });
 
+// Borrar una experiencia por ID
+app.delete('/experiencia/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('DELETE FROM experiencia WHERE _id = ?', [id]);
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Experiencia no encontrada' });
+    }
+
+    res.json({ message: 'Experiencia eliminada correctamente' });
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
 //-------------------------------------------------------ESTUDIOS / CURSOS -----------------------------------------
 //Obtener todos los estudios
 app.get('/estudios', async (req, res) => {
@@ -317,6 +337,26 @@ app.put('/estudio/:id', async (req, res) => {
       console.error('Error connecting to database', err);
       res.status(500).json({ message: 'Error interno del servidor' });
     }
+  }
+});
+
+// Borrar un estudio por ID
+app.delete('/estudio/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('DELETE FROM estudios WHERE _id = ?', [id]);
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Estudio no encontrado' });
+    }
+
+    res.json({ message: 'Estudio eliminado correctamente' });
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
 
