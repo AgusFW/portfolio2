@@ -12,16 +12,21 @@
     padding: 3% 2%;
 }
 
-/* Estilo para las tarjetas de experiencia */
-.card {
-    width: 95%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+.experiencia-nuevo-btn{
+    display: flex;
+    justify-content: center;
+    margin: 35px;
 }
 
-/* Estilo hover para las tarjetas de experiencia */
+.card {
+    width: 95%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1%;
+}
+
 .card:hover {
-    transform: scale(1.05); /* Aumentar el tamaño en un 5% */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); 
 }
 
 .card-container{
@@ -68,5 +73,6 @@
 @media (max-width: 700px) {
     .experiencia-section{
         grid-template-columns: 1fr;
+        margin-bottom: 50px;
     }
 }

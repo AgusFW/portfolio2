@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./css/header.css" />
     <link rel="stylesheet" href="./css/perfil.css" />
     <link rel="stylesheet" href="./css/experiencia.css" />
+    <link rel="stylesheet" href="./css/estudios.css" />
     <title>Agustina Witis Portfolio</title>
 </head>
 
@@ -96,6 +97,9 @@
         <section id="experiencias-section" class="experiencia-section">
             <!-- Aquí se cargarán las cards de experiencias -->
         </section>
+        <div class="experiencia-nuevo-btn">
+            <button type="button" class="btn btn-outline-light" id="newExperienciaBtn">Nueva Experiencia</button>
+        </div>
 
         <!-- Modal para mostrar experiencia -->
         <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
@@ -124,7 +128,7 @@
                     <div class="modal-body">
                         <form id="editExperienciaForm">
                             <label for="editExpTitulo" class="form-label">Titulo:</label>
-                            <input type="text" class="form-control mb-3" id="editExpTitulo" name="titulo">                            
+                            <input type="text" class="form-control mb-3" id="editExpTitulo" name="titulo">
 
                             <label for="editPeriodo" class="form-label">Periodo:</label>
                             <input type="text" class="form-control mb-3" id="editPeriodo" name="periodo">
@@ -158,6 +162,114 @@
             </div>
         </div>
 
+        <!-- Modal para agregar nueva experiencia -->
+        <div class="modal fade" id="newExperienciaModal" tabindex="-1" aria-labelledby="newExperienciaModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newExperienciaModalLabel">Nueva Experiencia</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newExperienciaForm">
+                            <label for="newExpTitulo" class="form-label">Título:</label>
+                            <input type="text" class="form-control mb-3" id="newExpTitulo" name="titulo">
+
+                            <label for="newExpPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="newExpPeriodo" name="periodo">
+
+                            <label for="newExpModalidad" class="form-label">Modalidad:</label>
+                            <input type="text" class="form-control mb-3" id="newExpModalidad" name="periodo">
+
+                            <label for="newExpLenguajes" class="form-label">Tecnologías:</label>
+                            <input type="text" class="form-control mb-3" id="newExpLenguajes" name="lenguajes">
+
+                            <label for="newExpDescripcion" class="form-label">Descripción:</label>
+                            <textarea class="form-control mb-3" id="newExpDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="newExpGithube" class="form-label">GitHube:</label>
+                            <input type="text" class="form-control mb-3" id="newExpGithube" name="githube">
+
+                            <label for="newExpImg" class="form-label">Imagen:</label>
+                            <input type="text" class="form-control mb-3" id="newExpImg" name="img">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success"
+                            id="saveNewExperienciaBtn">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-----------------------------------------ESTUDIOS----------------------------------------------------------->
+        <div class="estudios-titulo">
+            <h1>Estudios / Cursos</h1>
+        </div>
+        <section id="estudios-section" class="estudios-section">
+            <!-- Aquí se cargarán las cards de estudios -->
+        </section>
+
+        <!-- Modal para mostrar estudios -->
+        <div class="modal fade modal-lg" id="viewModalestudios" tabindex="-1" aria-labelledby="viewModalEstudiosLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewModalEstudiosLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body body-estudios">
+                        <!-- Contenido del modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar estudios -->
+        <div class="modal fade" id="editEstudiosModal" tabindex="-1" aria-labelledby="editEstudiosModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editEstudiosModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editEstudiosForm">
+                            <label for="editEstTitulo" class="form-label">Titulo:</label>
+                            <input type="text" class="form-control mb-3" id="editEstTitulo" name="titulo">
+
+                            <label for="editEstPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="editEstPeriodo" name="periodo">
+
+                            <label for="editEstLenguajes" class="form-label">Lenguajes:</label>
+                            <textarea class="form-control mb-3" id="editEstLenguajes" name="lenguajes"
+                                rows="2"></textarea>
+
+                            <label for="editEstDescripcion" class="form-label">Descripcion:</label>
+                            <textarea class="form-control mb-3" id="editEstDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="editEstImg" class="form-label">Img:</label>
+                            <input type="text" class="form-control mb-3" id="editEstImg" name="img">
+
+                            <label for="editEstCerti" class="form-label">Certificado:</label>
+                            <input type="text" class="form-control mb-3" id="editEstCerti" name="certificado">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success" id="saveChangesBtnModalEst">Guardar
+                            Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -167,12 +279,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"
-        integrity="sha512-FolTrWj6UFrQnylgp/x9zNJb2W8dDnF2t0YO2y0TpWuvCZG2Ilx7TJ9ItNfYw8ZscDQ1C8N5rGll5PmsCHDXBcg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="./js/perfil.js"></script>
     <script src="./js/experiencia.js"></script>
+    <script src="./js/estudios.js"></script>
 </body>
 
 </html>

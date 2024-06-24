@@ -153,7 +153,7 @@ app.get('/experiencias', async (req, res) => {
 //Crear una experiencia
 app.post('/experiencia', async (req, res) => {
   try {
-    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube } = req.body;
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
     if (!periodo || !titulo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
     }
@@ -162,7 +162,7 @@ app.post('/experiencia', async (req, res) => {
       req.body
     ]);
     connection.release();
-    res.json({ id: result.insertId, titulo, periodo, descripcion, modalidad, url, lenguajes, githube });
+    res.json({ id: result.insertId, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
   } catch (err) {
     if (err.code === 'ER_BAD_FIELD_ERROR') {
       res.status(400).json({ message: 'Error en los campos enviados' });
@@ -174,7 +174,7 @@ app.post('/experiencia', async (req, res) => {
 });
 
 
-// Obtener un experiencia por ID
+// Obtener una experiencia por ID
 app.get('/experiencia/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -226,7 +226,101 @@ app.put('/experiencia/:id', async (req, res) => {
   }
 });
 
-//-------------------------------------------------------PORT-----------------------------------------
+//-------------------------------------------------------ESTUDIOS / CURSOS -----------------------------------------
+//Obtener todos los estudios
+app.get('/estudios', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM estudios');
+    connection.release();
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ message: 'No profiles found' });
+    }
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+//Crear un estudio
+app.post('/estudio', async (req, res) => {
+  try {
+    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+    if (!periodo || !titulo || !descripcion) {
+      return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
+    }
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('INSERT INTO estudios SET ?', [
+      req.body
+    ]);
+    connection.release();
+    res.json({ id: result.insertId, titulo, periodo, descripcion, lenguajes, img, certificado });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
+});
+
+// Obtener un estudio por ID
+app.get('/estudio/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM estudios WHERE _id = ?', [id]);
+    connection.release();
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Perfil no encontrado' });
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+// Editar un estudio existente
+app.put('/estudio/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+
+    if (!titulo || !periodo || !descripcion) {
+      return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
+    }
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query(
+      'UPDATE estudios SET titulo = ?, periodo = ?, descripcion = ?, lenguajes = ?, img = ?, certificado = ? WHERE _id = ?',
+      [titulo, periodo, descripcion, lenguajes, img, certificado, id]
+    );
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Perfil no encontrado' });
+    }
+
+    res.json({ message: 'Perfil actualizado correctamente', id, titulo, periodo, descripcion, lenguajes, img, certificado });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
+});
+
+//-------------------------------------------------------PORT-------------------------------------------------------
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 })

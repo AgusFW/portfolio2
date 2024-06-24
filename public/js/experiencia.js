@@ -2,11 +2,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const experienciasSection = document.getElementById('experiencias-section');
     const viewModal = new bootstrap.Modal(document.getElementById('viewModal'));
     const editModal = new bootstrap.Modal(document.getElementById('editExperienciaModal'));
+    const newExperienciaModal = new bootstrap.Modal(document.getElementById('newExperienciaModal'));
 
     const viewModalLabel = document.getElementById('viewModalLabel');
     const viewModalBody = document.querySelector('#viewModal .modal-body');
     const editModalLabel = document.getElementById('editExperienciaModalLabel');
     const saveChangesBtn = document.getElementById('saveChangesBtnModalExp');
+    const newExperienciaBtn = document.getElementById('newExperienciaBtn');
+    const saveNewExperienciaBtn = document.getElementById('saveNewExperienciaBtn');
 
     let currentExperienciaId = null;
 
@@ -32,7 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error('No se pudo cargar la experiencia');
             }
             const experiencia = await response.json();
-            console.log('Experiencia cargada:', experiencia);
+            //console.log('Experiencia cargada:', experiencia);
             return experiencia;
         } catch (error) {
             console.error('Error al cargar la experiencia:', error);
@@ -146,11 +149,49 @@ document.addEventListener('DOMContentLoaded', async () => {
                 throw new Error('Error al actualizar la experiencia');
             }
 
-            const experiencias = await fetchExperiencias(); // Obtener las experiencias actualizadas
+            const experiencias = await fetchExperiencias();
             renderExperiencias(experiencias); 
             editModal.hide();
         } catch (error) {
             console.error('Error al actualizar la experiencia:', error);
+        }
+    });
+
+    // Evento para abrir el modal de nueva experiencia
+    newExperienciaBtn.addEventListener('click', () => {
+        newExperienciaModal.show();
+    });
+
+    // Evento para guardar la nueva experiencia
+    saveNewExperienciaBtn.addEventListener('click', async () => {
+        const newExperiencia = {
+            titulo: document.getElementById('newExpTitulo').value,
+            periodo: document.getElementById('newExpPeriodo').value,
+            modalidad: document.getElementById('newExpModalidad').value,
+            lenguajes: document.getElementById('newExpLenguajes').value,
+            descripcion: document.getElementById('newExpDescripcion').value,
+            githube: document.getElementById('newExpGithube').value,
+            img: document.getElementById('newExpImg').value
+        };
+
+        try {
+            const response = await fetch(`/experiencia`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newExperiencia)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al agregar la experiencia');
+            }
+
+            const experiencias = await fetchExperiencias();
+            renderExperiencias(experiencias);
+            newExperienciaModal.hide();
+        } catch (error) {
+            console.error('Error al agregar la experiencia:', error);
         }
     });
 
