@@ -1,0 +1,34 @@
+.aptitudes-titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color5);
+}
+
+.aptitudes-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1%;
+    padding: 3% 3%;
+}
+
+.aptitudes-section div {
+    padding: 1%;
+}
+
+
+@media (max-width: 700px) {
+    .aptitudes-section{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 485px) {
+    .aptitudes-section{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .aptitudes-section div {
+        padding: 3%;
+    }
+}

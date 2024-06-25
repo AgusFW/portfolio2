@@ -9,18 +9,17 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1%;
-    padding: 3% 2%;
+    padding: 3% 1%;
 }
 
 .estudio-nuevo-btn{
     display: flex;
     justify-content: center;
-    margin: 35px;
+    margin-bottom: 4%;
 }
 
 @media (max-width: 700px) {
     .estudios-section{
         grid-template-columns: 1fr;
-        margin-top: 50px; 
     }
 }

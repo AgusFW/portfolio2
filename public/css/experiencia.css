@@ -9,13 +9,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1%;
-    padding: 3% 2%;
+    padding: 3% 1%;
 }
 
 .experiencia-nuevo-btn{
     display: flex;
     justify-content: center;
-    margin: 35px;
+    margin-bottom: 4%;
 }
 
 .card {
