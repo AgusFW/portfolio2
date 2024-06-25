@@ -340,7 +340,7 @@ app.put('/estudio/:id', async (req, res) => {
   }
 });
 
-// Borrar un estudio por ID
+// Eliminar una experiencia por ID
 app.delete('/estudio/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -353,7 +353,7 @@ app.delete('/estudio/:id', async (req, res) => {
       return res.status(404).json({ message: 'Estudio no encontrado' });
     }
 
-    res.json({ message: 'Estudio eliminado correctamente' });
+    res.status(200).json({ message: 'Estudio eliminado correctamente' });
   } catch (err) {
     console.error('Error connecting to database', err);
     res.status(500).json({ message: 'Error interno del servidor' });

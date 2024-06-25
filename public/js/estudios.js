@@ -43,6 +43,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Función para borrar un estudio por ID
+    async function deleteEstudio(id) {
+        try {
+            const response = await fetch(`/estudio/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al eliminar el estudio');
+            }
+
+            const estudios = await fetchEstudios();
+            renderEstudios(estudios);
+        } catch (error) {
+            console.error('Error al eliminar el estudio:', error);
+        }
+    }
+
     // Función para construir las cards de cada estudio
     function renderEstudios(estudios) {
         estudiosSection.innerHTML = '';
@@ -62,6 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p class="card-text">${estudio.lenguajes}</p>
                         <button type="button" class="btn btn-secondary btn-sm view-more-Est-btn" data-id="${estudio._id}">Ver Más</button>
                         <button type="button" class="btn btn-outline-secondary btn-sm edit-Est-btn" data-id="${estudio._id}">Editar</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-Est-btn" data-id="${estudio._id}">Borrar</button>
                     </div>
                 </div>
             `;
@@ -93,6 +112,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         });
+
+        // Agregar evento de clic a todos los botones "Borrar"
+        document.querySelectorAll('.delete-Est-btn').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const estudioId = event.target.getAttribute('data-id');
+                const confirmacion = confirm('¿Estás seguro que deseas eliminar este estudio?');
+                if (confirmacion) {
+                    await deleteEstudio(estudioId);
+                }
+            });
+        });
     }
 
     // Función para renderizar el contenido del modal de visualización
@@ -119,8 +149,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('editEstCerti').value = estudio.certificado;
     }
 
-     // Evento para guardar los cambios del formulario de edición
-     saveChangesBtnModalEst.addEventListener('click', async () => {
+    // Evento para guardar los cambios del formulario de edición
+    saveChangesBtnModalEst.addEventListener('click', async () => {
         if (!currentEstudioId) return;
 
         const updatedEstudio = {
@@ -146,15 +176,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const estudio = await fetchEstudios();
-            renderEstudios(estudio); 
+            renderEstudios(estudio);
             editEstudiosModal.hide();
         } catch (error) {
             console.error('Error al actualizar la experiencia:', error);
         }
     });
 
-     // Evento para abrir el modal de nueva experiencia
-     newEstudioBtn.addEventListener('click', () => {
+    // Evento para abrir el modal de nueva experiencia
+    newEstudioBtn.addEventListener('click', () => {
         newEstudioModal.show();
     });
 

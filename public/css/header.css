@@ -23,6 +23,10 @@ section{
     padding: 3% 0;
 }
 
+button {
+    margin: 2px;
+}
+
 .body-box {
     padding: 2% 1%;
     background-image: url('../assets/fondo-2.png');
