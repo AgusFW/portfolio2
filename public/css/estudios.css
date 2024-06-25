@@ -18,6 +18,20 @@
     margin-bottom: 4%;
 }
 
+.img-container-estudios {
+    max-width: 100%; 
+    height: auto; 
+    overflow: hidden;
+    margin: auto; 
+}
+
+.img-container-estudios img {
+    display: block;
+    max-width: 100%; 
+    height: auto; 
+    margin: auto;
+}
+
 @media (max-width: 700px) {
     .estudios-section{
         grid-template-columns: 1fr;
