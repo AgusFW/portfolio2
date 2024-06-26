@@ -5,30 +5,45 @@
     color: var(--color5);
 }
 
-.aptitudes-section{
+.aptitudes-tecnicas-section{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 1%;
-    padding: 3% 3%;
+    padding: 3% 5%;
 }
 
-.aptitudes-section div {
-    padding: 1%;
+.aptitudes-tecnicas-section div {
+    padding: 10%;
 }
+
+.aptitudes-personales-section {
+    padding: 3% 10%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center; 
+    gap: 10px; 
+}
+
+.aptitudes-personales-section label {
+    color: var(--color5);
+    font-size: 18px;
+}
+
 
 
 @media (max-width: 700px) {
-    .aptitudes-section{
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-}
-
-@media (max-width: 485px) {
-    .aptitudes-section{
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .aptitudes-section div {
+    .aptitudes-tecnicas-section{
+        grid-template-columns: 1fr 1fr 1fr;
         padding: 3%;
+    }
+    .aptitudes-tecnicas-section div {
+        padding: 2%;
+    }
+    .aptitudes-personales-section {
+        padding: 3%;
+        gap: 20px;
+    }
+    .aptitudes-personales-section label {
+        font-size: 15px;
     }
 }

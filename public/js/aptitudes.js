@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         label: "JavaScript"
     };
 
-    var chartDataComunicacionEfectiva = {
+   /* var chartDataComunicacionEfectiva = {
         value: 70,
         color: "#F7464A",
         highlight: "#FF5A5E",
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
         color: "#1E8449",
         highlight: "#229954",
         label: "Gestion del tiempo"
-    }
+    }*/
 
  // Función para crear un gráfico dado los datos y opciones
  function createDoughnutChart(canvasId, chartData) {
@@ -109,11 +109,11 @@ createDoughnutChart('ChartNode', chartDataNode);
 createDoughnutChart('ChartUML', chartDataUML);
 createDoughnutChart('ChartTypeScript', chartDataTypeScript);
 createDoughnutChart('ChartJavaScript', chartDataJavaScript);
-createDoughnutChart('ChartComunicacionEfectiva', chartDataComunicacionEfectiva);
+/*createDoughnutChart('ChartComunicacionEfectiva', chartDataComunicacionEfectiva);
 createDoughnutChart('ChartTrabajoenEquipo', chartDataTrabajoEnEquipo);
 createDoughnutChart('ChartResoluciondeProblemas', chartDataResolucionDeProblemas);
 createDoughnutChart('ChartIniciativa', chartDataIniciativa);
-createDoughnutChart('ChartGestiondelTiempo', chartDataGestionDelTiempo);
+createDoughnutChart('ChartGestiondelTiempo', chartDataGestionDelTiempo); */
 });
 
 
