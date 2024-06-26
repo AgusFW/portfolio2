@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="./css/experiencia.css" />
     <link rel="stylesheet" href="./css/estudios.css" />
     <link rel="stylesheet" href="./css/aptitudes.css" />
+    <link rel="stylesheet" href="./css/contacto.css" />
 
     <title>Agustina Witis Portfolio</title>
 </head>
@@ -397,7 +398,26 @@
         </section>
 
         <!-----------------------------------------CONTACTO----------------------------------------------------------->
+        <div class="contacto-titulo">
+            <h1>Contacto</h1>
+        </div>
+        <section id="contacto-section" class="contacto-section">
+            <div>
+                <form id="contact-form">
+                    <label for="from_name" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control mb-3" id="from_name" name="from_name" required>
 
+                    <label for="from_email" class="form-label">Email:</label>
+                    <input type="email" class="form-control mb-3" id="from_email" name="from_email" required>
+
+                    <label for="message" class="form-label">Mensaje:</label>
+                    <textarea class="form-control mb-3" rows="5" id="message" name="message" required></textarea>
+
+                    <button type="submit" class="btn btn-secondary" id="submit-button">Enviar</button>
+                </form>
+            </div>
+
+        </section>
     </div>
 
     <!-------------------------------------------------------------- JS -------------------------------------------------------->
@@ -407,12 +427,15 @@
         crossorigin="anonymous"></script>
     <!-- Cargar Chart.js desde CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <!-- EmailJS -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
     <!--JS de las secciones-->
     <script src="./js/perfil.js"></script>
     <script src="./js/experiencia.js"></script>
     <script src="./js/estudios.js"></script>
     <script src="./js/aptitudes.js"></script>
+    <script src="./js/contacto.js"></script>
 </body>
 
 </html>

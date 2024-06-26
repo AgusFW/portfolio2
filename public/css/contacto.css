@@ -1,0 +1,14 @@
+.contacto-titulo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color5);
+}
+
+.contacto-section{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3%;
+    padding: 3%;
+    color: var(--color5);
+}
