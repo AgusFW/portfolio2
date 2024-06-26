@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     color: var(--color5);
+    margin-bottom: 4%;
 }
 
 .experiencia-section{
@@ -71,6 +72,10 @@
 }
 
 @media (max-width: 700px) {
+    .experiencia-container{
+        padding: 3% 0;
+    }
+
     .experiencia-section{
         grid-template-columns: 1fr;
         margin-bottom: 50px;

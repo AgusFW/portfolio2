@@ -1,11 +1,12 @@
-.aptitudes-titulo{
+.aptitudes-titulo {
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--color5);
+    margin: 5% 0 4% 0;
 }
 
-.aptitudes-tecnicas-section{
+.aptitudes-tecnicas-section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: 1%;
@@ -32,6 +33,9 @@
 
 
 @media (max-width: 700px) {
+    .aptitudes-container {
+        padding: 3% 0;
+    }
     .aptitudes-tecnicas-section{
         grid-template-columns: 1fr 1fr 1fr;
         padding: 3%;
