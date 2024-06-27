@@ -1,13 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- CSS de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Animate -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!------------------------------------------------------CSS-------------------------------------------------------->
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/perfil.css" />
+    <link rel="stylesheet" href="./css/experiencia.css" />
+    <link rel="stylesheet" href="./css/estudios.css" />
+    <link rel="stylesheet" href="./css/aptitudes.css" />
+    <link rel="stylesheet" href="./css/contacto.css" />
+    <link rel="stylesheet" href="./css/coverLetter.css" />
+
+    <title>Agustina Witis Portfolio</title>
 </head>
-<body>
-    <div>
-        HOLA ESTOY EN LA SEGUNDA PAGINA EN INGLES
+
+<body class="animate__animated animate__fadeIn">
+
+    <!----------------------------------------------------HEADER--------------------------------------------------->
+    <header class="header-background">
+        <div class="btn-group header-buttons">
+            <a href="index.html" class="btn btn-outline-light btn-sm">Español</a>
+            <a href="./english-index.html" class="btn btn-outline-light btn-sm active">English</a>
+        </div>
+        <div class="header-content">
+            <h1>Agustina Witis</h1>
+            <div>
+                <p>Full Stack Developer</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="body-box">
+        <!----------------------------------------------------PERFIL--------------------------------------------------->
+        <section class="perfil-container">
+            <div class="profile-grid">
+                <div class="profile-info">
+                    <h1 id="profile-name"></h1>
+                    <h2 id="profile-title"></h2>
+                    <p id="profile-description"></p>
+                    <p id="profile-skills"></p>
+                    <div>
+                        <button type="button" class="btn btn-outline-light" data-bs-toggle="modal"
+                            data-bs-target="#editModal">
+                            Edit
+                        </button>
+                    </div>
+
+                </div>
+                <div class="profile-img-container">
+                    <img src="./assets/foto-perfil.png" alt="Profile Image" class="profile-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal para editar el perfil -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Editar Perfil</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editProfileForm">
+                            <label for="editNombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control mb-3" id="editNombre" name="nombre">
+
+                            <label for="editTitulo" class="form-label">Título:</label>
+                            <input type="text" class="form-control mb-3" id="editTitulo" name="titulo">
+
+                            <label for="editPerfil" class="form-label">Perfil:</label>
+                            <textarea class="form-control mb-3" id="editPerfil" name="perfil" rows="5"></textarea>
+
+                            <label for="editSkills" class="form-label">Skills:</label>
+                            <textarea class="form-control" id="editSkills" name="skills" rows="3"></textarea>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success" id="saveChangesBtn">Guardar
+                            Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-----------------------------------------EXPERIENCIA----------------------------------------------------------->
+        <div class="experiencia-container">
+            <div class="experiencia-titulo">
+                <h1>Experiencia Laboral</h1>
+            </div>
+            <section id="experiencias-section" class="experiencia-section">
+                <!-- Aquí se cargarán las cards de experiencias -->
+            </section>
+            <div class="experiencia-nuevo-btn">
+                <button type="button" class="btn btn-outline-light" id="newExperienciaBtn">Nueva Experiencia</button>
+            </div>
+        </div>
+
+        <!-- Modal para mostrar experiencia -->
+        <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Contenido del modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar experiencia -->
+        <div class="modal fade" id="editExperienciaModal" tabindex="-1" aria-labelledby="editExperienciaModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editExperienciaModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editExperienciaForm">
+                            <label for="editExpTitulo" class="form-label">Titulo:</label>
+                            <input type="text" class="form-control mb-3" id="editExpTitulo" name="titulo">
+
+                            <label for="editPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="editPeriodo" name="periodo">
+
+                            <label for="editLenguajes" class="form-label">Lenguajes:</label>
+                            <textarea class="form-control" id="editLenguajes" name="lenguajes" rows="3"></textarea>
+
+                            <label for="editDescripcion" class="form-label">Descripcion:</label>
+                            <textarea class="form-control mb-3" id="editDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="editModalidad" class="form-label">Modalidad:</label>
+                            <input type="text" class="form-control mb-3" id="editModalidad" name="modalidad">
+
+                            <label for="editUrl" class="form-label">URL:</label>
+                            <input type="text" class="form-control mb-3" id="editUrl" name="url">
+
+                            <label for="editGithube" class="form-label">GitHube:</label>
+                            <input type="text" class="form-control mb-3" id="editGithube" name="githube">
+
+                            <label for="editImg" class="form-label">Img:</label>
+                            <input type="text" class="form-control mb-3" id="editImg" name="img">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success" id="saveChangesBtnModalExp">Guardar
+                            Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para agregar nueva experiencia -->
+        <div class="modal fade" id="newExperienciaModal" tabindex="-1" aria-labelledby="newExperienciaModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newExperienciaModalLabel">Nueva Experiencia</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newExperienciaForm">
+                            <label for="newExpTitulo" class="form-label">Título:</label>
+                            <input type="text" class="form-control mb-3" id="newExpTitulo" name="titulo">
+
+                            <label for="newExpPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="newExpPeriodo" name="periodo">
+
+                            <label for="newExpModalidad" class="form-label">Modalidad:</label>
+                            <input type="text" class="form-control mb-3" id="newExpModalidad" name="modalidad">
+
+                            <label for="newExpLenguajes" class="form-label">Tecnologías:</label>
+                            <input type="text" class="form-control mb-3" id="newExpLenguajes" name="lenguajes">
+
+                            <label for="newExpDescripcion" class="form-label">Descripción:</label>
+                            <textarea class="form-control mb-3" id="newExpDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="newExpGithube" class="form-label">GitHube:</label>
+                            <input type="text" class="form-control mb-3" id="newExpGithube" name="githube">
+
+                            <label for="newExpImg" class="form-label">Imagen:</label>
+                            <input type="text" class="form-control mb-3" id="newExpImg" name="img">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success"
+                            id="saveNewExperienciaBtn">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-----------------------------------------ESTUDIOS----------------------------------------------------------->
+        <div class="estudios-container">
+            <div class="estudios-titulo">
+                <h1>Estudios / Cursos</h1>
+            </div>
+            <section id="estudios-section" class="estudios-section">
+                <!-- Aquí se cargarán las cards de estudios -->
+            </section>
+            <div class="estudio-nuevo-btn">
+                <button type="button" class="btn btn-outline-light" id="newEstudioBtn">Nuevo Estudio</button>
+            </div>
+        </div>
+
+        <!-- Modal para mostrar estudios -->
+        <div class="modal fade modal-lg" id="viewModalestudios" tabindex="-1" aria-labelledby="viewModalEstudiosLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewModalEstudiosLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body body-estudios">
+                        <!-- Contenido del modal -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar estudios -->
+        <div class="modal fade" id="editEstudiosModal" tabindex="-1" aria-labelledby="editEstudiosModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editEstudiosModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editEstudiosForm">
+                            <label for="editEstTitulo" class="form-label">Titulo:</label>
+                            <input type="text" class="form-control mb-3" id="editEstTitulo" name="titulo">
+
+                            <label for="editEstPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="editEstPeriodo" name="periodo">
+
+                            <label for="editEstLenguajes" class="form-label">Lenguajes:</label>
+                            <textarea class="form-control mb-3" id="editEstLenguajes" name="lenguajes"
+                                rows="2"></textarea>
+
+                            <label for="editEstDescripcion" class="form-label">Descripcion:</label>
+                            <textarea class="form-control mb-3" id="editEstDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="editEstImg" class="form-label">Img:</label>
+                            <input type="text" class="form-control mb-3" id="editEstImg" name="img">
+
+                            <label for="editEstCerti" class="form-label">Certificado:</label>
+                            <input type="text" class="form-control mb-3" id="editEstCerti" name="certificado">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success" id="saveChangesBtnModalEst">Guardar
+                            Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para agregar nuevo estudio -->
+        <div class="modal fade" id="newEstudioModal" tabindex="-1" aria-labelledby="newEstudioModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newEstudioModalLabel">Nuevo Estudio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newEstudioForm">
+                            <label for="newEstTitulo" class="form-label">Título:</label>
+                            <input type="text" class="form-control mb-3" id="newEstTitulo" name="titulo">
+
+                            <label for="newEstPeriodo" class="form-label">Periodo:</label>
+                            <input type="text" class="form-control mb-3" id="newEstPeriodo" name="periodo">
+
+                            <label for="newEstDescripcion" class="form-label">Descripción:</label>
+                            <textarea class="form-control mb-3" id="newEstDescripcion" name="descripcion"
+                                rows="5"></textarea>
+
+                            <label for="newEstLenguajes" class="form-label">Tecnologías:</label>
+                            <input type="text" class="form-control mb-3" id="newEstLenguajes" name="lenguajes">
+
+                            <label for="newEstCerti" class="form-label">Certificado:</label>
+                            <input type="text" class="form-control mb-3" id="newEstCerti" name="certificado">
+
+                            <label for="newEstImg" class="form-label">Imagen:</label>
+                            <input type="text" class="form-control mb-3" id="newEstImg" name="img">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success" id="saveNewEstudioBtn">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-----------------------------------------APTITUDES----------------------------------------------------------->
+        <div class="aptitudes-container">
+            <div class="aptitudes-titulo">
+                <h1>Aptitudes Técnicas</h1>
+            </div>
+            <section id="aptitudes-tecnicas-section" class="aptitudes-tecnicas-section">
+                <div>
+                    <canvas id="ChartReact" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartNode" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartUML" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartTypeScript" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartJavaScript" width="100%"></canvas>
+                </div>
+                <!--
+                <div>
+                    <canvas id="ChartComunicacionEfectiva" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartTrabajoenEquipo" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartResoluciondeProblemas" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartIniciativa" width="100%"></canvas>
+                </div>
+                <div>
+                    <canvas id="ChartGestiondelTiempo" width="100%"></canvas>
+                </div>
+               -->
+            </section>
+
+            <div class="aptitudes-titulo">
+                <h1>Aptitudes Personales</h1>
+            </div>
+            <section id="aptitudes-personales-section" class="aptitudes-personales-section">
+                <label>Comunicacion efectiva</label>
+                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-success" style="width: 80%">80%</div>
+                </div>
+
+                <label>Trabajo en equipo</label>
+                <div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="50" aria-valuemin="0"
+                    aria-valuemax="100">
+                    <div class="progress-bar bg-info text-dark" style="width: 95%">95%</div>
+                </div>
+
+                <label>Resolucion de problemas</label>
+                <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-warning text-dark" style="width: 80%">80%</div>
+                </div>
+
+                <label>Iniciativa</label>
+                <div class="progress" role="progressbar" aria-label="Danger example" aria-valuenow="100"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar bg-danger" style="width: 85%">85%</div>
+                </div>
+
+                <label>Gestion del tiempo</label>
+                <div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" style="width: 80%">80%</div>
+                </div>
+            </section>
+        </div>
+
+        <!----------------------------------------- CARTA DE PRESENTACION ----------------------------------------------------------->
+        <div class="carta-container">
+            <div class="carta-titulo">
+                <h1>Carta de Presentacion</h1>
+            </div>
+            <section id="carta-section" class="carta-section">
+                <textarea class="form-control overflow-auto mb-3" id="coverLetter" name="coverLetter"
+                    rows="10"></textarea>
+                <div>
+                    <button type="button" class="btn btn-outline-light editCoverLetter" data-id="${estudio._id}"
+                        data-bs-toggle="modal" data-bs-target="#editCoverLetterModal">Editar</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Modal para editar la cover letter -->
+        <div class="modal fade" id="editCoverLetterModal" tabindex="-1" aria-labelledby="editCoverLetterModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCoverLetterModalLabel">Editar Cover Letter</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editCoverLetterForm">
+                            <label for="editCoverLetterCarta" class="form-label">Carta:</label>
+                            <textarea class="form-control mb-3" id="editCoverLetterCarta" name="carta"
+                                rows="10"></textarea>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-outline-success"
+                            id="saveChangesBtnModalCoverLetter">Guardar
+                            Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-----------------------------------------CONTACTO----------------------------------------------------------->
+        <div class="contacto-container">
+            <div class="contacto-titulo">
+                <h1>Contacto</h1>
+            </div>
+            <section id="contacto-section" class="contacto-section">
+                <div class="contact-form-container">
+                    <form id="contact-form">
+                        <label for="from_name" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control mb-3" id="from_name" name="from_name" required>
+
+                        <label for="from_email" class="form-label">Email:</label>
+                        <input type="email" class="form-control mb-3" id="from_email" name="from_email" required>
+
+                        <label for="message" class="form-label">Mensaje:</label>
+                        <textarea class="form-control mb-3" rows="5" id="message" name="message" required></textarea>
+
+                        <button type="submit" class="btn btn-secondary" id="submit-button">Enviar</button>
+                    </form>
+                </div>
+                <div class="contact-links-container">
+                    <div class="contact-links-box">
+                        <p class="mb-5">
+                            No dudes en contactarme. Estoy disponible para cualquier consulta.
+                        </p>
+                        <a href="https://wa.me/541135804354" target="_blank" class="contact-item mb-5">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+54 11 3580 4354</span>
+                        </a>
+                        <a href="mailto:agustina.witis@gmail.com" target="_blank" class="contact-item mb-5">
+                            <i class="fas fa-envelope"></i>
+                            <span>agustina.witis@gmail.com</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/agustina-witis/" target="_blank" class="contact-item">
+                            <i class="fab fa-linkedin"></i>
+                            <span>www.linkedin.com/in/agustina-witis/</span>
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+        </div>
     </div>
+
+    <!-------------------------------------------------------------- JS -------------------------------------------------------->
+    <!--Bootstrap JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- Cargar Chart.js desde CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <!-- EmailJS -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+    <!--JS de las secciones-->
+    <script src="./english-js/profile.js"></script>
+    <script src="./english-js/experience.js"></script>
+    <script src="./english-js/studies.js"></script>
+    <script src="./english-js/skills.js"></script>
+    <script src="./english-js/contact.js"></script>
+    <script src="./english-js/cover-letter.js"></script>
 </body>
+
 </html>
