@@ -142,7 +142,7 @@ app.get('/experiencias', async (req, res) => {
     if (rows.length > 0) {
       res.json(rows);
     } else {
-      res.status(404).json({ message: 'No profiles found' });
+      res.status(404).json({ message: 'No se encontraron las experiencias.' });
     }
   } catch (err) {
     console.error('Error connecting to database', err);
@@ -184,7 +184,7 @@ app.get('/experiencia/:id', async (req, res) => {
     connection.release();
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: 'Perfil no encontrado' });
+      return res.status(404).json({ message: 'Experiencia no encontrada' });
     }
 
     res.json(rows[0]);
@@ -215,7 +215,7 @@ app.put('/experiencia/:id', async (req, res) => {
       return res.status(404).json({ message: 'Perfil no encontrado' });
     }
 
-    res.json({ message: 'Perfil actualizado correctamente', id, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
+    res.json({ message: 'Experiencia actualizada correctamente', id, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
   } catch (err) {
     if (err.code === 'ER_BAD_FIELD_ERROR') {
       res.status(400).json({ message: 'Error en los campos enviados' });
@@ -257,7 +257,7 @@ app.get('/estudios', async (req, res) => {
     if (rows.length > 0) {
       res.json(rows);
     } else {
-      res.status(404).json({ message: 'No profiles found' });
+      res.status(404).json({ message: 'No se encontraron los estudios' });
     }
   } catch (err) {
     console.error('Error connecting to database', err);
@@ -298,7 +298,7 @@ app.get('/estudio/:id', async (req, res) => {
     connection.release();
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: 'Perfil no encontrado' });
+      return res.status(404).json({ message: 'Estudio no encontrado' });
     }
 
     res.json(rows[0]);
@@ -326,10 +326,10 @@ app.put('/estudio/:id', async (req, res) => {
     connection.release();
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Perfil no encontrado' });
+      return res.status(404).json({ message: 'Estudio no encontrado' });
     }
 
-    res.json({ message: 'Perfil actualizado correctamente', id, titulo, periodo, descripcion, lenguajes, img, certificado });
+    res.json({ message: 'Estudio actualizado correctamente', id, titulo, periodo, descripcion, lenguajes, img, certificado });
   } catch (err) {
     if (err.code === 'ER_BAD_FIELD_ERROR') {
       res.status(400).json({ message: 'Error en los campos enviados' });
@@ -357,6 +357,82 @@ app.delete('/estudio/:id', async (req, res) => {
   } catch (err) {
     console.error('Error connecting to database', err);
     res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+//-------------------------------------------------------COVER LETTER----------------------------------------------------
+// Obtener un cover letter por ID
+app.get('/coverLetter/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM cover_letter WHERE _id = ?', [id]);
+    connection.release();
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Cover Letter no encontrada' });
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+//Crear una Cover Letter
+app.post('/coverLetter', async (req, res) => {
+  try {
+    const { carta } = req.body;
+    if (!carta) {
+      return res.status(400).json({ message: 'El campo carta es obligatorio' });
+    }
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('INSERT INTO cover_letter SET ?', [
+      req.body
+    ]);
+    connection.release();
+    res.json({ id: result.insertId, carta });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
+});
+
+// Editar una cover letter existente
+app.put('/coverLetter/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { carta } = req.body;
+
+    if (!carta) {
+      return res.status(400).json({ message: 'El campo carta es obligatorio.' });
+    }
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query(
+      'UPDATE cover_letter SET carta = ? WHERE _id = ?',
+      [carta, id]
+    );
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Cover letter no encontrada.' });
+    }
+
+    res.json({ message: 'Cover Letter actualizada correctamente.', id, carta });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
   }
 });
 

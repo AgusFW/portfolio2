@@ -1,18 +1,24 @@
+.contacto-container {
+    background-image: url('../assets/fondo-3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .contacto-titulo {
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--color5);
-    margin: 5% 0 4% 0;
+    margin: 3% 0 2% 0;
 }
 
 .contacto-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3%;
-    padding: 3%;
+    padding: 0 3% 4%;
     color: var(--color5);
-    margin-bottom: 5%;
 }
 
 .contact-links-container {

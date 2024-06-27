@@ -1,0 +1,17 @@
+.carta-titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color5);
+    margin: 4% 0 2%;
+}
+
+.carta-section {
+    padding: 0 5%;
+}
+
+@media (max-width: 700px) {
+    .carta-section {
+        padding: 0 1%;
+    }
+}
