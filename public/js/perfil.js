@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             profileSkills.innerText = perfil.skills;
         } catch (error) {
             console.error('Error al cargar el perfil:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar el perfil',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     }
 

@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "mysql2": "^3.10.0",
-    "sweetalert2": "^11.11.1"
+    "mysql2": "^3.10.0"
   }
 }
