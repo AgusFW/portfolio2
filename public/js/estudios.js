@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             return await response.json();
         } catch (error) {
             console.error('Error al cargar los estudios:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al cargar los estudios',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
             return [];
         }
     }
@@ -39,6 +45,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             return estudio;
         } catch (error) {
             console.error('Error al cargar el estudio:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al cargar el estudio',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
             return null;
         }
     }
@@ -58,6 +70,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderEstudios(estudios);
         } catch (error) {
             console.error('Error al eliminar el estudio:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al eliminar el estudio',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     }
 
@@ -117,8 +135,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.querySelectorAll('.delete-Est-btn').forEach(button => {
             button.addEventListener('click', async (event) => {
                 const estudioId = event.target.getAttribute('data-id');
-                const confirmacion = confirm('¿Estás seguro que deseas eliminar este estudio?');
-                if (confirmacion) {
+                const result = await Swal.fire({
+                    title: 'Borrar Estudio',
+                    text: "¿Esta seguro de querer borrar este estudio?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No'
+                });
+
+                if (result.isConfirmed) {
                     await deleteEstudio(estudioId);
                 }
             });
@@ -179,7 +207,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderEstudios(estudio);
             editEstudiosModal.hide();
         } catch (error) {
-            console.error('Error al actualizar la experiencia:', error);
+            console.error('Error al actualizar el estudio:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al actualizar el estudio',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     });
 
@@ -216,7 +250,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderEstudios(estudios);
             newEstudioModal.hide();
         } catch (error) {
-            console.error('Error al agregar la experiencia:', error);
+            console.error('Error al agregar el estudio:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al agregar el estudio',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     });
 

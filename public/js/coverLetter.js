@@ -14,7 +14,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Llenar los datos la cover letter en la página
             coverLetter.innerText = carta.carta;
         } catch (error) {
-            console.error('Error al cargar el perfil:', error);
+            console.error('Error al cargar la cover letter:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al cargar la cover letter',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     }
 
@@ -29,6 +35,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('editCoverLetterCarta').value = carta.carta;
         } catch (error) {
             console.error('Error al cargar la Cover Letter:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al cargar la cover letter',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     });
 
@@ -57,6 +69,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             modal.hide();
         } catch (error) {
             console.error('Error al guardar los cambios:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al guardar los cambios',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     }
 

@@ -23,6 +23,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             return await response.json();
         } catch (error) {
             console.error('Error al cargar las experiencias:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo cargar las experiencias laborales',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
             return [];
         }
     }
@@ -39,6 +45,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             return experiencia;
         } catch (error) {
             console.error('Error al cargar la experiencia:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al cargar la experiencia',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
             return null;
         }
     }
@@ -58,6 +70,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderExperiencias(experiencias);
         } catch (error) {
             console.error('Error al eliminar la experiencia:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al eliminar la experiencia',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     }
 
@@ -118,13 +136,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', async (event) => {
                 const experienciaId = event.target.getAttribute('data-id');
-                const confirmacion = confirm('¿Estás seguro que deseas eliminar esta experiencia?');
-                if (confirmacion) {
+                const result = await Swal.fire({
+                    title: 'Borrar Experiencia',
+                    text: "¿Esta seguro de querer borrar la experiencia?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No'
+                });
+        
+                if (result.isConfirmed) {
                     await deleteExperiencia(experienciaId);
                 }
             });
         });
     }
+        
 
     // Función para renderizar el contenido del modal de visualización
     function renderViewModalContent(experiencia) {
@@ -185,6 +214,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             editModal.hide();
         } catch (error) {
             console.error('Error al actualizar la experiencia:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al actualizar la experiencia',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     });
 
@@ -223,6 +258,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             newExperienciaModal.hide();
         } catch (error) {
             console.error('Error al agregar la experiencia:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al agregar la experiencia',
+                footer: 'Por favor, intenta nuevamente más tarde'
+            });
         }
     });
 
