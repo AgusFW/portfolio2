@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', async () => {
     const editModal = new bootstrap.Modal(document.getElementById('editModal'));
     const editProfileForm = document.getElementById('editProfileForm');

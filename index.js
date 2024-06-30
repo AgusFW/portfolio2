@@ -212,7 +212,7 @@ app.put('/experiencia/:id', async (req, res) => {
     connection.release();
 
     if (result.affectedRows === 0) {
-      return res.status(404).json({ message: 'Perfil no encontrado' });
+      return res.status(404).json({ message: 'Experiencia no encontrada' });
     }
 
     res.json({ message: 'Experiencia actualizada correctamente', id, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
@@ -433,6 +433,235 @@ app.put('/coverLetter/:id', async (req, res) => {
       console.error('Error connecting to database', err);
       res.status(500).json({ message: 'Error interno del servidor' });
     }
+  }
+});
+
+//-------------------------------------------------------WORK EXPERIENCE-----------------------------------------
+//Obtener todas las experiencias
+app.get('/workexperiences', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM work_experience');
+    connection.release();
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ message: 'No se encontraron las experiencias.' });
+    }
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+//Crear una experiencia
+app.post('/workexperience', async (req, res) => {
+  try {
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
+    if (!periodo || !titulo || !descripcion) {
+      return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
+    }
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('INSERT INTO work_experience SET ?', [
+      req.body
+    ]);
+    connection.release();
+    res.json({ id: result.insertId, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
+});
+
+
+// Obtener una experiencia por ID
+app.get('/workexperience/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM work_experience WHERE _id = ?', [id]);
+    connection.release();
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Experiencia no encontrada' });
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+// Editar una experiencia existente
+app.put('/workexperience/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
+
+    if (!titulo || !periodo || !descripcion) {
+      return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
+    }
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query(
+      'UPDATE work_experience SET titulo = ?, periodo = ?, descripcion = ?, modalidad = ?, url = ?, lenguajes = ?, githube = ?, img = ? WHERE _id = ?',
+      [titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img, id]
+    );
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Experiencia no encontrada' });
+    }
+
+    res.json({ message: 'Experiencia actualizada correctamente', id, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
+});
+
+// Borrar una experiencia por ID
+app.delete('/workexperience/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('DELETE FROM work_experience WHERE _id = ?', [id]);
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Experiencia no encontrada' });
+    }
+
+    res.json({ message: 'Experiencia eliminada correctamente' });
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+//------------------------------------------------------- EDUCATION / COURSES -----------------------------------------
+//Obtener todos los estudios
+app.get('/educations', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM education');
+    connection.release();
+
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ message: 'No se encontraron los estudios' });
+    }
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).send('Internal server error');
+  }
+});
+
+//Crear un estudio
+app.post('/education', async (req, res) => {
+  try {
+    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+    if (!periodo || !titulo || !descripcion) {
+      return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
+    }
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('INSERT INTO education SET ?', [
+      req.body
+    ]);
+    connection.release();
+    res.json({ id: result.insertId, titulo, periodo, descripcion, lenguajes, img, certificado });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
+});
+
+// Obtener un estudio por ID
+app.get('/education/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM education WHERE _id = ?', [id]);
+    connection.release();
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: 'Estudio no encontrado' });
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
+// Editar un estudio existente
+app.put('/education/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+
+    if (!titulo || !periodo || !descripcion) {
+      return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
+    }
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query(
+      'UPDATE education SET titulo = ?, periodo = ?, descripcion = ?, lenguajes = ?, img = ?, certificado = ? WHERE _id = ?',
+      [titulo, periodo, descripcion, lenguajes, img, certificado, id]
+    );
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Estudio no encontrado' });
+    }
+
+    res.json({ message: 'Estudio actualizado correctamente', id, titulo, periodo, descripcion, lenguajes, img, certificado });
+  } catch (err) {
+    if (err.code === 'ER_BAD_FIELD_ERROR') {
+      res.status(400).json({ message: 'Error en los campos enviados' });
+    } else {
+      console.error('Error connecting to database', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
+});
+
+// Eliminar una experiencia por ID
+app.delete('/education/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('DELETE FROM education WHERE _id = ?', [id]);
+    connection.release();
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Estudio no encontrado' });
+    }
+
+    res.status(200).json({ message: 'Estudio eliminado correctamente' });
+  } catch (err) {
+    console.error('Error connecting to database', err);
+    res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
 

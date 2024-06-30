@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <p><b>Funciones:</b> ${experiencia.descripcion}</p>
         <p><b>Modalidad:</b> ${experiencia.modalidad}</p>
         <p><b>URL:</b> <a href="${experiencia.url}" target="_blank">${experiencia.url}</a></p>
-        <p><b>GitHub:</b> <a href="${experiencia.githube}" target="_blank">${experiencia.githube}</a></p>
+        <p><b>Repositorio:</b> <a href="${experiencia.githube}" target="_blank">${experiencia.githube}</a></p>
         `;
     }
 
