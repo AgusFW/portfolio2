@@ -176,12 +176,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Mostrar el nombre de la imagen actual
         const imgInput = document.getElementById('editEstImg');
         imgInput.setAttribute('data-current-img', estudio.img);
-        imgInput.previousElementSibling.innerText = estudio.img.split('/').pop();
+        imgInput.previousElementSibling.innerText = estudio.img ? estudio.img.split('/').pop() : 'No hay img';
 
         // Mostrar el nombre del certificado actual
         const certificadoInput = document.getElementById('editEstCerti');
         certificadoInput.setAttribute('data-current-certificado', estudio.certificado);
-        certificadoInput.previousElementSibling.innerText = estudio.certificado.split('/').pop();
+        certificadoInput.previousElementSibling.innerText = estudio.certificado ? estudio.certificado.split('/').pop() : 'No hay certificado';
     }
 
     // Evento para guardar los cambios del formulario de edición

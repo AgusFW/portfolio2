@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p class="card-text">${estudio.periodo}</p>
                         <label>Languages/Libraries:</label>
                         <p class="card-text">${estudio.lenguajes}</p>
-                        <button type="button" class="btn btn-secondary btn-sm view-more-Est-btn" data-id="${estudio._id}">Ver Más</button>
+                        <button type="button" class="btn btn-secondary btn-sm view-more-Est-btn" data-id="${estudio._id}">See More</button>
                         <button type="button" class="btn btn-outline-secondary btn-sm edit-Est-btn" data-id="${estudio._id}">Editar</button>
                         <button type="button" class="btn btn-outline-danger btn-sm delete-Est-btn" data-id="${estudio._id}">Borrar</button>
                     </div>
@@ -176,12 +176,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Mostrar el nombre de la imagen actual
         const imgInput = document.getElementById('editEstImg');
         imgInput.setAttribute('data-current-img', estudio.img);
-        imgInput.previousElementSibling.innerText = estudio.img.split('/').pop();
+        imgInput.previousElementSibling.innerText = estudio.img ? estudio.img.split('/').pop() : 'No hay img';
 
         // Mostrar el nombre del certificado actual
         const certificadoInput = document.getElementById('editEstCerti');
         certificadoInput.setAttribute('data-current-certificado', estudio.certificado);
-        certificadoInput.previousElementSibling.innerText = estudio.certificado.split('/').pop();
+        certificadoInput.previousElementSibling.innerText = estudio.certificado ? estudio.certificado.split('/').pop() : 'No hay certificado';
     }
 
     // Evento para guardar los cambios del formulario de edición

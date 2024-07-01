@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Mostrar el nombre de la imagen actual
         const imgInput = document.getElementById('editImg');
         imgInput.setAttribute('data-current-img', experiencia.img);
-        imgInput.previousElementSibling.innerText = experiencia.img.split('/').pop();
+        imgInput.previousElementSibling.innerText = experiencia.img ? experiencia.img.split('/').pop() : 'No hay img';
     }
 
     // Evento para guardar los cambios del formulario de edición
