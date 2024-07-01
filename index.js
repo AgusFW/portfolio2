@@ -1,5 +1,7 @@
 import express from 'express';
 import pool from './config/db.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const port = 4000;
@@ -8,6 +10,19 @@ const port = 4000;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'));
+
+// Obtener el directorio actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Rutas para servir los archivos HTML
+app.get('/espanol', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/english', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'english.html'));
+});
 
 // CRUD routes
 
