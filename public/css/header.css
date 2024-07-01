@@ -57,6 +57,12 @@ button {
     right: 30px;
 }
 
+.header-login {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
+
 .header-content h1 {
     font-size: 5em;
     margin-bottom: 4%;
