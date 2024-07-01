@@ -139,7 +139,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editExperienciaForm">
+                        <form id="editExperienciaForm" enctype="multipart/form-data">
                             <label for="editExpTitulo" class="form-label">Titulo:</label>
                             <input type="text" class="form-control mb-3" id="editExpTitulo" name="titulo">
 
@@ -163,7 +163,7 @@
                             <input type="text" class="form-control mb-3" id="editGithube" name="githube">
 
                             <label for="editImg" class="form-label">Img:</label>
-                            <input type="text" class="form-control mb-3" id="editImg" name="img">
+                            <input type="file" name="img" id="editImg" accept="image/png,image/jpeg" class="form-control mb-3">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -185,7 +185,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="newExperienciaForm">
+                        <form id="newExperienciaForm" enctype="multipart/form-data">
                             <label for="newExpTitulo" class="form-label">Título:</label>
                             <input type="text" class="form-control mb-3" id="newExpTitulo" name="titulo">
 
@@ -206,7 +206,7 @@
                             <input type="text" class="form-control mb-3" id="newExpGithube" name="githube">
 
                             <label for="newExpImg" class="form-label">Imagen:</label>
-                            <input type="text" class="form-control mb-3" id="newExpImg" name="img">
+                            <input type="file" name="img" id="newExpImg" accept="image/png,image/jpeg" class="form-control mb-3">
                         </form>
                     </div>
                     <div class="modal-footer">

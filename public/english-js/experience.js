@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const cardHTML = `
                 <div class="card card-container mb-3">
                     <div class="img-container">
-                        <img src="./assets/${experiencia.img}" alt="${experiencia.img}">
+                        <img src="assets/${experiencia.img}" alt="${experiencia.img}">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">${experiencia.titulo}</h5>
@@ -146,14 +146,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     confirmButtonText: 'Si',
                     cancelButtonText: 'No'
                 });
-        
+
                 if (result.isConfirmed) {
                     await deleteExperiencia(experienciaId);
                 }
             });
         });
     }
-        
+
 
     // Función para renderizar el contenido del modal de visualización
     function renderViewModalContent(experiencia) {
@@ -178,31 +178,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('editUrl').value = experiencia.url;
         document.getElementById('editLenguajes').value = experiencia.lenguajes;
         document.getElementById('editGithube').value = experiencia.githube;
-        document.getElementById('editImg').value = experiencia.img;
+        // Mostrar el nombre de la imagen actual
+        const imgInput = document.getElementById('editImg');
+        imgInput.setAttribute('data-current-img', experiencia.img);
+        imgInput.previousElementSibling.innerText = experiencia.img.split('/').pop();
     }
 
     // Evento para guardar los cambios del formulario de edición
     saveChangesBtn.addEventListener('click', async () => {
         if (!currentExperienciaId) return;
 
-        const updatedExperiencia = {
-            titulo: document.getElementById('editExpTitulo').value,
-            periodo: document.getElementById('editPeriodo').value,
-            descripcion: document.getElementById('editDescripcion').value,
-            modalidad: document.getElementById('editModalidad').value,
-            url: document.getElementById('editUrl').value,
-            lenguajes: document.getElementById('editLenguajes').value,
-            githube: document.getElementById('editGithube').value,
-            img: document.getElementById('editImg').value
-        };
+        const form = document.getElementById('editExperienciaForm');
+        const formData = new FormData(form);
 
         try {
             const response = await fetch(`/workexperience/${currentExperienciaId}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedExperiencia)
+                body: formData
             });
 
             if (!response.ok) {
@@ -230,23 +222,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Evento para guardar la nueva experiencia
     saveNewExperienciaBtn.addEventListener('click', async () => {
-        const newExperiencia = {
-            titulo: document.getElementById('newExpTitulo').value,
-            periodo: document.getElementById('newExpPeriodo').value,
-            modalidad: document.getElementById('newExpModalidad').value,
-            lenguajes: document.getElementById('newExpLenguajes').value,
-            descripcion: document.getElementById('newExpDescripcion').value,
-            githube: document.getElementById('newExpGithube').value,
-            img: document.getElementById('newExpImg').value
-        };
+        const formData = new FormData(document.getElementById('newExperienciaForm'));
 
         try {
             const response = await fetch(`/workexperience`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newExperiencia)
+                body: formData
             });
 
             if (!response.ok) {
@@ -258,6 +239,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             newExperienciaModal.hide();
         } catch (error) {
             console.error('Error al agregar la experiencia:', error);
+            console.log(formData)
             Swal.fire({
                 icon: 'error',
                 title: 'Error',

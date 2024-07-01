@@ -242,7 +242,7 @@ app.put('/experiencia/:id', upload.single('img'), async (req, res) => {
     const [result] = await connection.query(
       'UPDATE experiencia SET titulo = ?, periodo = ?, descripcion = ?, modalidad = ?, url = ?, lenguajes = ?, githube = ?, img = ? WHERE _id = ?',
       [titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img, id]
-  );
+    );
     connection.release();
 
     if (result.affectedRows === 0) {
@@ -490,16 +490,17 @@ app.get('/workexperiences', async (req, res) => {
 });
 
 //Crear una experiencia
-app.post('/workexperience', async (req, res) => {
+app.post('/workexperience', upload.single('img'), async (req, res) => {
   try {
-    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube } = req.body;
+    const img = req.file ? req.file.filename : null;
     if (!periodo || !titulo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
     }
     const connection = await pool.getConnection();
-    const [result] = await connection.query('INSERT INTO work_experience SET ?', [
-      req.body
-    ]);
+    const [result] = await connection.query('INSERT INTO work_experience SET ?', {
+      titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img
+    });
     connection.release();
     res.json({ id: result.insertId, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
   } catch (err) {
@@ -534,10 +535,11 @@ app.get('/workexperience/:id', async (req, res) => {
 });
 
 // Editar una experiencia existente
-app.put('/workexperience/:id', async (req, res) => {
+app.put('/workexperience/:id', upload.single('img'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube } = req.body;
+    const img = req.file ? req.file.filename : req.body.img;
 
     if (!titulo || !periodo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
