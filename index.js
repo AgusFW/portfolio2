@@ -2,6 +2,7 @@ import express from 'express';
 import pool from './config/db.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import multer from 'multer';
 
 const app = express();
 const port = 4000;
@@ -10,6 +11,19 @@ const port = 4000;
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'));
+
+// Middleware para subir archivos
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    //console.log("multer file", file)
+    cb(null, 'public/assets');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // Obtener el directorio actual
 const __filename = fileURLToPath(import.meta.url);
@@ -166,16 +180,20 @@ app.get('/experiencias', async (req, res) => {
 });
 
 //Crear una experiencia
-app.post('/experiencia', async (req, res) => {
+app.post('/experiencia', upload.single('img'), async (req, res) => {
   try {
-    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube } = req.body;
+    const img = req.file ? req.file.filename : null;
+
+    //console.log('Archivo subido:', req.file);
+
     if (!periodo || !titulo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
     }
     const connection = await pool.getConnection();
-    const [result] = await connection.query('INSERT INTO experiencia SET ?', [
-      req.body
-    ]);
+    const [result] = await connection.query('INSERT INTO experiencia SET ?', {
+      titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img
+    });
     connection.release();
     res.json({ id: result.insertId, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
   } catch (err) {
@@ -210,10 +228,11 @@ app.get('/experiencia/:id', async (req, res) => {
 });
 
 // Editar una experiencia existente
-app.put('/experiencia/:id', async (req, res) => {
+app.put('/experiencia/:id', upload.single('img'), async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img } = req.body;
+    const { titulo, periodo, descripcion, modalidad, url, lenguajes, githube } = req.body;
+    const img = req.file ? req.file.filename : req.body.img;
 
     if (!titulo || !periodo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
@@ -223,7 +242,7 @@ app.put('/experiencia/:id', async (req, res) => {
     const [result] = await connection.query(
       'UPDATE experiencia SET titulo = ?, periodo = ?, descripcion = ?, modalidad = ?, url = ?, lenguajes = ?, githube = ?, img = ? WHERE _id = ?',
       [titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img, id]
-    );
+  );
     connection.release();
 
     if (result.affectedRows === 0) {
