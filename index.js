@@ -299,17 +299,21 @@ app.get('/estudios', async (req, res) => {
   }
 });
 
-//Crear un estudio
-app.post('/estudio', async (req, res) => {
+// Crear un estudio
+app.post('/estudio', upload.fields([{ name: 'img', maxCount: 1 }, { name: 'certificado', maxCount: 1 }]), async (req, res) => {
   try {
-    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+    const { titulo, periodo, descripcion, lenguajes } = req.body;
+    const img = req.files['img'] ? req.files['img'][0].filename : null;
+    const certificado = req.files['certificado'] ? req.files['certificado'][0].filename : null;
+
     if (!periodo || !titulo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
     }
+
     const connection = await pool.getConnection();
-    const [result] = await connection.query('INSERT INTO estudios SET ?', [
-      req.body
-    ]);
+    const [result] = await connection.query('INSERT INTO estudios SET ?', {
+      titulo, periodo, descripcion, lenguajes, img, certificado
+    });
     connection.release();
     res.json({ id: result.insertId, titulo, periodo, descripcion, lenguajes, img, certificado });
   } catch (err) {
@@ -343,10 +347,12 @@ app.get('/estudio/:id', async (req, res) => {
 });
 
 // Editar un estudio existente
-app.put('/estudio/:id', async (req, res) => {
+app.put('/estudio/:id', upload.fields([{ name: 'img', maxCount: 1 }, { name: 'certificado', maxCount: 1 }]), async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+    const { titulo, periodo, descripcion, lenguajes } = req.body;
+    const img = req.files['img'] ? req.files['img'][0].filename : null;
+    const certificado = req.files['certificado'] ? req.files['certificado'][0].filename : null;
 
     if (!titulo || !periodo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
@@ -374,7 +380,7 @@ app.put('/estudio/:id', async (req, res) => {
   }
 });
 
-// Eliminar una experiencia por ID
+// Eliminar un estudio por ID
 app.delete('/estudio/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -607,16 +613,19 @@ app.get('/educations', async (req, res) => {
 });
 
 //Crear un estudio
-app.post('/education', async (req, res) => {
+app.post('/education', upload.fields([{ name: 'img', maxCount: 1 }, { name: 'certificado', maxCount: 1 }]), async (req, res) => {
   try {
-    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+    const { titulo, periodo, descripcion, lenguajes } = req.body;
+    const img = req.files['img'] ? req.files['img'][0].filename : null;
+    const certificado = req.files['certificado'] ? req.files['certificado'][0].filename : null;
+
     if (!periodo || !titulo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
     }
     const connection = await pool.getConnection();
-    const [result] = await connection.query('INSERT INTO education SET ?', [
-      req.body
-    ]);
+    const [result] = await connection.query('INSERT INTO education SET ?', {
+      titulo, periodo, descripcion, lenguajes, img, certificado
+    });
     connection.release();
     res.json({ id: result.insertId, titulo, periodo, descripcion, lenguajes, img, certificado });
   } catch (err) {
@@ -650,10 +659,12 @@ app.get('/education/:id', async (req, res) => {
 });
 
 // Editar un estudio existente
-app.put('/education/:id', async (req, res) => {
+app.put('/education/:id', upload.fields([{ name: 'img', maxCount: 1 }, { name: 'certificado', maxCount: 1 }]), async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, periodo, descripcion, lenguajes, img, certificado } = req.body;
+    const { titulo, periodo, descripcion, lenguajes } = req.body;
+    const img = req.files['img'] ? req.files['img'][0].filename : null;
+    const certificado = req.files['certificado'] ? req.files['certificado'][0].filename : null;
 
     if (!titulo || !periodo || !descripcion) {
       return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });

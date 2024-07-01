@@ -163,7 +163,8 @@
                             <input type="text" class="form-control mb-3" id="editGithube" name="githube">
 
                             <label for="editImg" class="form-label">Img:</label>
-                            <input type="file" name="img" id="editImg" accept="image/png,image/jpeg" class="form-control mb-3" required >
+                            <input type="file" name="img" id="editImg" accept="image/png,image/jpeg"
+                                class="form-control mb-3" required>
                             <!--<input type="text" class="form-control mb-3" id="editImg" name="img">-->
                         </form>
                     </div>
@@ -194,20 +195,21 @@
                             <input type="text" class="form-control mb-3" id="newExpPeriodo" name="periodo" required>
 
                             <label for="newExpModalidad" class="form-label">Modalidad:</label>
-                            <input type="text" class="form-control mb-3" id="newExpModalidad" name="modalidad" >
+                            <input type="text" class="form-control mb-3" id="newExpModalidad" name="modalidad">
 
                             <label for="newExpLenguajes" class="form-label">Tecnologías:</label>
-                            <input type="text" class="form-control mb-3" id="newExpLenguajes" name="lenguajes" >
+                            <input type="text" class="form-control mb-3" id="newExpLenguajes" name="lenguajes">
 
                             <label for="newExpDescripcion" class="form-label">Descripción:</label>
-                            <textarea class="form-control mb-3" id="newExpDescripcion" name="descripcion"
-                                rows="5" required></textarea>
+                            <textarea class="form-control mb-3" id="newExpDescripcion" name="descripcion" rows="5"
+                                required></textarea>
 
                             <label for="newExpGithube" class="form-label">GitHube:</label>
-                            <input type="text" class="form-control mb-3" id="newExpGithube" name="githube" >
+                            <input type="text" class="form-control mb-3" id="newExpGithube" name="githube">
 
                             <label for="newExpImg" class="form-label">Imagen:</label>
-                            <input type="file" name="img" id="newExpImg" accept="image/png,image/jpeg" class="form-control mb-3">
+                            <input type="file" name="img" id="newExpImg" accept="image/png,image/jpeg"
+                                class="form-control mb-3">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -259,7 +261,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="editEstudiosForm">
+                        <form id="editEstudiosForm" enctype="multipart/form-data">
                             <label for="editEstTitulo" class="form-label">Titulo:</label>
                             <input type="text" class="form-control mb-3" id="editEstTitulo" name="titulo">
 
@@ -275,10 +277,12 @@
                                 rows="5"></textarea>
 
                             <label for="editEstImg" class="form-label">Img:</label>
-                            <input type="text" class="form-control mb-3" id="editEstImg" name="img">
+                            <input type="file" name="img" id="editEstImg" accept="image/png,image/jpeg"
+                                class="form-control mb-3">
 
                             <label for="editEstCerti" class="form-label">Certificado:</label>
-                            <input type="text" class="form-control mb-3" id="editEstCerti" name="certificado">
+                            <input type="file" name="certificado" id="editEstCerti" accept="image/png,image/jpeg"
+                                class="form-control mb-3">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -300,7 +304,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="newEstudioForm">
+                        <form id="newEstudioForm" enctype="multipart/form-data">
                             <label for="newEstTitulo" class="form-label">Título:</label>
                             <input type="text" class="form-control mb-3" id="newEstTitulo" name="titulo">
 
@@ -315,10 +319,12 @@
                             <input type="text" class="form-control mb-3" id="newEstLenguajes" name="lenguajes">
 
                             <label for="newEstCerti" class="form-label">Certificado:</label>
-                            <input type="text" class="form-control mb-3" id="newEstCerti" name="certificado">
+                            <input type="file" name="certificado" id="newEstCerti" accept="image/png,image/jpeg"
+                                class="form-control mb-3">
 
                             <label for="newEstImg" class="form-label">Imagen:</label>
-                            <input type="text" class="form-control mb-3" id="newEstImg" name="img">
+                            <input type="file" name="img" id="newEstImg" accept="image/png,image/jpeg"
+                                class="form-control mb-3">
                         </form>
                     </div>
                     <div class="modal-footer">

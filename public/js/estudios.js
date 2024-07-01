@@ -173,30 +173,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('editEstPeriodo').value = estudio.periodo;
         document.getElementById('editEstDescripcion').value = estudio.descripcion;
         document.getElementById('editEstLenguajes').value = estudio.lenguajes;
-        document.getElementById('editEstImg').value = estudio.img;
-        document.getElementById('editEstCerti').value = estudio.certificado;
+        // Mostrar el nombre de la imagen actual
+        const imgInput = document.getElementById('editEstImg');
+        imgInput.setAttribute('data-current-img', estudio.img);
+        imgInput.previousElementSibling.innerText = estudio.img.split('/').pop();
+
+        // Mostrar el nombre del certificado actual
+        const certificadoInput = document.getElementById('editEstCerti');
+        certificadoInput.setAttribute('data-current-certificado', estudio.certificado);
+        certificadoInput.previousElementSibling.innerText = estudio.certificado.split('/').pop();
     }
 
     // Evento para guardar los cambios del formulario de edición
     saveChangesBtnModalEst.addEventListener('click', async () => {
         if (!currentEstudioId) return;
 
-        const updatedEstudio = {
-            titulo: document.getElementById('editEstTitulo').value,
-            periodo: document.getElementById('editEstPeriodo').value,
-            descripcion: document.getElementById('editEstDescripcion').value,
-            lenguajes: document.getElementById('editEstLenguajes').value,
-            img: document.getElementById('editEstImg').value,
-            certificado: document.getElementById('editEstCerti').value
-        };
+        const form = document.getElementById('editEstudiosForm');
+        const formData = new FormData(form);
 
         try {
             const response = await fetch(`/estudio/${currentEstudioId}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(updatedEstudio)
+                body: formData
             });
 
             if (!response.ok) {
@@ -224,22 +222,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Evento para guardar la nueva experiencia
     saveNewEstudioBtn.addEventListener('click', async () => {
-        const newEstudio = {
-            titulo: document.getElementById('newEstTitulo').value,
-            periodo: document.getElementById('newEstPeriodo').value,
-            lenguajes: document.getElementById('newEstLenguajes').value,
-            descripcion: document.getElementById('newEstDescripcion').value,
-            certificado: document.getElementById('newEstCerti').value,
-            img: document.getElementById('newEstImg').value
-        };
+        const form = document.getElementById('newEstudioForm');
+        const formData = new FormData(form);
 
         try {
             const response = await fetch(`/estudio`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newEstudio)
+                body: formData
             });
 
             if (!response.ok) {
