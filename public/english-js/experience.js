@@ -98,8 +98,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <label>Languages/Libraries:</label>
                         <p class="card-text">${experiencia.lenguajes}</p>
                         <button type="button" class="btn btn-secondary btn-sm view-more-btn" data-id="${experiencia._id}">See More</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm edit-btn" data-id="${experiencia._id}">Editar</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm delete-btn" data-id="${experiencia._id}">Borrar</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm edit-btn auth-required" data-id="${experiencia._id}">Editar</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-btn auth-required" data-id="${experiencia._id}">Borrar</button>
                     </div>
                 </div>
             `;
@@ -152,6 +152,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         });
+
+        checkAuthentication();
     }
 
 
@@ -248,6 +250,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
     });
+
+    // Función para verificar la autenticación del usuario
+    function checkAuthentication() {
+        fetch('/is-authenticated')
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    // Mostrar botones de edición y borrado
+                    document.querySelectorAll('.auth-required').forEach(el => {
+                        el.style.display = 'flex';
+                    });
+                } else {
+                    // Ocultar botones de edición y borrado
+                    document.querySelectorAll('.auth-required').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al verificar autenticación'
+                });
+            });
+    }
 
     // Cargar las experiencias al cargar la página
     const experiencias = await fetchExperiencias();

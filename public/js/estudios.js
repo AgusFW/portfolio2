@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <label>Lenguajes:</label>
                         <p class="card-text">${estudio.lenguajes}</p>
                         <button type="button" class="btn btn-secondary btn-sm view-more-Est-btn" data-id="${estudio._id}">Ver Más</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm edit-Est-btn" data-id="${estudio._id}">Editar</button>
-                        <button type="button" class="btn btn-outline-danger btn-sm delete-Est-btn" data-id="${estudio._id}">Borrar</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm edit-Est-btn auth-required" data-id="${estudio._id}">Editar</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-Est-btn auth-required" data-id="${estudio._id}">Borrar</button>
                     </div>
                 </div>
             `;
@@ -151,6 +151,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         });
+
+        checkAuthentication();
     }
 
     // Función para renderizar el contenido del modal de visualización
@@ -248,6 +250,33 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
     });
+
+    // Función para verificar la autenticación del usuario
+    function checkAuthentication() {
+        fetch('/is-authenticated')
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    // Mostrar botones de edición y borrado
+                    document.querySelectorAll('.auth-required').forEach(el => {
+                        el.style.display = 'flex';
+                    });
+                } else {
+                    // Ocultar botones de edición y borrado
+                    document.querySelectorAll('.auth-required').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al verificar autenticación'
+                });
+            });
+    }
 
     // Cargar los estudios al cargar la página
     const estudios = await fetchEstudios();
