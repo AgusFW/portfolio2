@@ -2,6 +2,7 @@ import express from 'express';
 import pool from './config/db.js';
 import path from 'path';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import { fileURLToPath } from 'url';
@@ -9,7 +10,7 @@ import españolRoutes from './router/español-routes.js';
 import englishRoutes from './router/english-routes.js';
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 // middlewares
 app.use(express.json());
@@ -23,23 +24,6 @@ const __dirname = path.dirname(__filename);
 
 // Configurar SECRET_KEY
 const SECRET_KEY = process.env.SECRET_KEY;
-
-// Función para verificar el token
-function verifyToken(req, res, next) {
-  const token = req.cookies.token;
-  console.log("req.cookies", req.cookies)
-  if (!token) {
-    return res.status(403).send('Token requerido');
-  }
-  try {
-    const decoded = jwt.verify(token, SECRET_KEY);
-    console.log("decoded", decoded)
-    req.user = decoded;
-    next();
-  } catch (error) {
-    res.status(401).send('Token no válido');
-  }
-}
 
 // Rutas para servir los archivos HTML
 app.get('/espanol', (req, res) => {
@@ -61,12 +45,12 @@ app.post('/login', async (req, res) => {
 
     if (!user) {
       connection.release();
-      return res.status(401).json({ message: 'Usuario no encontrado' });
+      return res.status(401).json({ message: 'Email o contraseña incorrectos' });
     }
 
     if (user.password !== password) {
       connection.release();
-      return res.status(401).json({ message: 'Contraseña incorrecta' });
+      return res.status(401).json({ message: 'Email o contraseña incorrectos' });
     }
 
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '2h' });
