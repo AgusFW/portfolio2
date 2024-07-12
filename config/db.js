@@ -21,4 +21,3 @@ pool.getConnection()
 
 export default pool;
 
-/* emailJS: @werty16234 */
