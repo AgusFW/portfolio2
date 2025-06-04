@@ -12,12 +12,12 @@ const pool = createPool({
     queueLimit: 0,
 });
 
-pool.getConnection()
+/*pool.getConnection()
     .then(connection => {
         pool.releaseConnection(connection);
         console.log('Base de datos CONECTADA');
     })
-    .catch(err => console.error('Error connecting to database', err));
+    .catch(err => console.error('Error connecting to database', err));*/
 
 export default pool;
 

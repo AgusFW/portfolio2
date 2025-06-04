@@ -4,9 +4,7 @@ import pool from '../config/db.js';
 // /workexperiences
 export const getWorkExperiences = async (req, res) => {
     try {
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM work_experience');
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM work_experience');
 
         if (rows.length > 0) {
             res.json(rows);
@@ -27,11 +25,11 @@ export const postWorkExperience = async (req, res) => {
         if (!periodo || !titulo || !descripcion) {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('INSERT INTO work_experience SET ?', {
-            titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img
+        
+        const [result] = await pool.query('INSERT INTO work_experience SET ?', {
+                titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img
         });
-        connection.release();
+
         res.json({ id: result.insertId, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
     } catch (err) {
         if (err.code === 'ER_BAD_FIELD_ERROR') {
@@ -48,9 +46,7 @@ export const getWorkExperience = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM work_experience WHERE _id = ?', [id]);
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM work_experience WHERE _id = ?', [id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Experiencia no encontrada' });
@@ -72,12 +68,11 @@ export const putWorkExperience = async (req, res) => {
         if (req.file) {
             img = req.file.filename; 
         } else {
-            const connection = await pool.getConnection();
-            const [currentImage] = await connection.query(
+            const [currentImage] = await pool.query(
                 'SELECT img FROM work_experience WHERE _id = ?',
                 [id]
             );
-            connection.release();
+
             if (currentImage.length > 0) {
                 img = currentImage[0].img;
             }
@@ -86,12 +81,10 @@ export const putWorkExperience = async (req, res) => {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query(
+        const [result] = await pool.query(
             'UPDATE work_experience SET titulo = ?, periodo = ?, descripcion = ?, modalidad = ?, url = ?, lenguajes = ?, githube = ?, img = ? WHERE _id = ?',
             [titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img, id]
         );
-        connection.release();
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Experiencia no encontrada' });
@@ -113,9 +106,7 @@ export const deleteWorkExperience = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('DELETE FROM work_experience WHERE _id = ?', [id]);
-        connection.release();
+        const [result] = await pool.query('DELETE FROM work_experience WHERE _id = ?', [id]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Experiencia no encontrada' });
@@ -132,9 +123,7 @@ export const deleteWorkExperience = async (req, res) => {
 // /educations
 export const getEducations = async (req, res) => {
     try {
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM education');
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM education');
 
         if (rows.length > 0) {
             res.json(rows);
@@ -157,11 +146,9 @@ export const postEducation = async (req, res) => {
         if (!periodo || !titulo || !descripcion) {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('INSERT INTO education SET ?', {
+        const [result] = await pool.query('INSERT INTO education SET ?', {
             titulo, periodo, descripcion, lenguajes, img, certificado
         });
-        connection.release();
         res.json({ id: result.insertId, titulo, periodo, descripcion, lenguajes, img, certificado });
     } catch (err) {
         if (err.code === 'ER_BAD_FIELD_ERROR') {
@@ -178,9 +165,7 @@ export const getEducation = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM education WHERE _id = ?', [id]);
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM education WHERE _id = ?', [id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Estudio no encontrado' });
@@ -204,12 +189,10 @@ export const putEducation = async (req, res) => {
         if (req.files['img'] && req.files['img'].length > 0) {
             img = req.files['img'][0].filename;
         } else {
-            const connection = await pool.getConnection();
-            const [currentImg] = await connection.query(
+            const [currentImg] = await pool.query(
                 'SELECT img FROM education WHERE _id = ?',
                 [id]
             );
-            connection.release();
 
             if (currentImg.length > 0) {
                 img = currentImg[0].img;
@@ -219,12 +202,10 @@ export const putEducation = async (req, res) => {
         if (req.files['certificado'] && req.files['certificado'].length > 0) {
             certificado = req.files['certificado'][0].filename;
         } else {
-            const connection = await pool.getConnection();
-            const [currentCertificado] = await connection.query(
+            const [currentCertificado] = await pool.query(
                 'SELECT certificado FROM education WHERE _id = ?',
                 [id]
             );
-            connection.release();
 
             if (currentCertificado.length > 0) {
                 certificado = currentCertificado[0].certificado;
@@ -235,12 +216,10 @@ export const putEducation = async (req, res) => {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query(
+        const [result] = await pool.query(
             'UPDATE education SET titulo = ?, periodo = ?, descripcion = ?, lenguajes = ?, img = ?, certificado = ? WHERE _id = ?',
             [titulo, periodo, descripcion, lenguajes, img, certificado, id]
         );
-        connection.release();
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Estudio no encontrado' });
@@ -262,9 +241,7 @@ export const deleteEducation = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('DELETE FROM education WHERE _id = ?', [id]);
-        connection.release();
+        const [result] = await pool.query('DELETE FROM education WHERE _id = ?', [id]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Estudio no encontrado' });

@@ -5,9 +5,7 @@ import pool from '../config/db.js';
 
 export const getPerfiles = async (req, res) => {
     try {
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM sobre_mi');
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM sobre_mi');
 
         if (rows.length > 0) {
             res.json(rows);
@@ -27,11 +25,9 @@ export const postPerfil = async (req, res) => {
         if (!nombre || !titulo || !perfil || !skills) {
             return res.status(400).json({ message: 'Todos los campos son requeridos' });
         }
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('INSERT INTO sobre_mi SET ?', [
+        const [result] = await pool.query('INSERT INTO sobre_mi SET ?', [
             req.body
         ]);
-        connection.release();
         res.json({ id: result.insertId, nombre, titulo, perfil, skills });
     } catch (err) {
         if (err.code === 'ER_BAD_FIELD_ERROR') {
@@ -48,9 +44,7 @@ export const getPerfil = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM sobre_mi WHERE _id = ?', [id]);
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM sobre_mi WHERE _id = ?', [id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Perfil no encontrado' });
@@ -73,12 +67,10 @@ export const putPerfil = async (req, res) => {
             return res.status(400).json({ message: 'Todos los campos son requeridos' });
         }
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query(
+        const [result] = await pool.query(
             'UPDATE sobre_mi SET nombre = ?, titulo = ?, perfil = ?, skills = ? WHERE _id = ?',
             [nombre, titulo, perfil, skills, id]
         );
-        connection.release();
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Perfil no encontrado' });
@@ -99,9 +91,7 @@ export const putPerfil = async (req, res) => {
 // /experiencias
 export const getExperiencias = async (req, res) => {
     try {
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM experiencia');
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM experiencia');
 
         if (rows.length > 0) {
             res.json(rows);
@@ -125,11 +115,9 @@ export const postExperiencia = async (req, res) => {
         if (!periodo || !titulo || !descripcion) {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('INSERT INTO experiencia SET ?', {
+        const [result] = await pool.query('INSERT INTO experiencia SET ?', {
             titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img
         });
-        connection.release();
         res.json({ id: result.insertId, titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img });
     } catch (err) {
         if (err.code === 'ER_BAD_FIELD_ERROR') {
@@ -146,9 +134,7 @@ export const getExperiencia = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM experiencia WHERE _id = ?', [id]);
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM experiencia WHERE _id = ?', [id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Experiencia no encontrada' });
@@ -170,12 +156,10 @@ export const putExperiencia = async (req, res) => {
         if (req.file) {
             img = req.file.filename; 
         } else {
-            const connection = await pool.getConnection();
-            const [currentImage] = await connection.query(
+            const [currentImage] = await pool.query(
                 'SELECT img FROM experiencia WHERE _id = ?',
                 [id]
             );
-            connection.release();
             if (currentImage.length > 0) {
                 img = currentImage[0].img;
             }
@@ -184,12 +168,10 @@ export const putExperiencia = async (req, res) => {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query(
+        const [result] = await pool.query(
             'UPDATE experiencia SET titulo = ?, periodo = ?, descripcion = ?, modalidad = ?, url = ?, lenguajes = ?, githube = ?, img = ? WHERE _id = ?',
             [titulo, periodo, descripcion, modalidad, url, lenguajes, githube, img, id]
         );
-        connection.release();
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Experiencia no encontrada' });
@@ -211,9 +193,7 @@ export const deleteExperiencia = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('DELETE FROM experiencia WHERE _id = ?', [id]);
-        connection.release();
+        const [result] = await pool.query('DELETE FROM experiencia WHERE _id = ?', [id]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Experiencia no encontrada' });
@@ -230,9 +210,7 @@ export const deleteExperiencia = async (req, res) => {
 // /estudios
 export const getEstudios = async (req, res) => {
     try {
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM estudios');
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM estudios');
 
         if (rows.length > 0) {
             res.json(rows);
@@ -256,11 +234,9 @@ export const postEstudio = async (req, res) => {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('INSERT INTO estudios SET ?', {
+        const [result] = await pool.query('INSERT INTO estudios SET ?', {
             titulo, periodo, descripcion, lenguajes, img, certificado
         });
-        connection.release();
         res.json({ id: result.insertId, titulo, periodo, descripcion, lenguajes, img, certificado });
     } catch (err) {
         if (err.code === 'ER_BAD_FIELD_ERROR') {
@@ -277,9 +253,7 @@ export const getEstudio = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM estudios WHERE _id = ?', [id]);
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM estudios WHERE _id = ?', [id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Estudio no encontrado' });
@@ -303,12 +277,10 @@ export const putEstudio = async (req, res) => {
         if (req.files['img'] && req.files['img'].length > 0) {
             img = req.files['img'][0].filename;
         } else {
-            const connection = await pool.getConnection();
-            const [currentImg] = await connection.query(
+            const [currentImg] = await pool.query(
                 'SELECT img FROM estudios WHERE _id = ?',
                 [id]
             );
-            connection.release();
 
             if (currentImg.length > 0) {
                 img = currentImg[0].img;
@@ -318,12 +290,10 @@ export const putEstudio = async (req, res) => {
         if (req.files['certificado'] && req.files['certificado'].length > 0) {
             certificado = req.files['certificado'][0].filename;
         } else {
-            const connection = await pool.getConnection();
-            const [currentCertificado] = await connection.query(
+            const [currentCertificado] = await pool.query(
                 'SELECT certificado FROM estudios WHERE _id = ?',
                 [id]
             );
-            connection.release();
 
             if (currentCertificado.length > 0) {
                 certificado = currentCertificado[0].certificado;
@@ -334,12 +304,10 @@ export const putEstudio = async (req, res) => {
             return res.status(400).json({ message: 'Los campos titulo, periodo y descripcion son requeridos' });
         }
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query(
+        const [result] = await pool.query(
             'UPDATE estudios SET titulo = ?, periodo = ?, descripcion = ?, lenguajes = ?, img = ?, certificado = ? WHERE _id = ?',
             [titulo, periodo, descripcion, lenguajes, img, certificado, id]
         );
-        connection.release();
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Estudio no encontrado' });
@@ -361,9 +329,7 @@ export const deleteEstudio = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('DELETE FROM estudios WHERE _id = ?', [id]);
-        connection.release();
+        const [result] = await pool.query('DELETE FROM estudios WHERE _id = ?', [id]);
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Estudio no encontrado' });
@@ -382,9 +348,7 @@ export const getCoverLetter = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const connection = await pool.getConnection();
-        const [rows] = await connection.query('SELECT * FROM cover_letter WHERE _id = ?', [id]);
-        connection.release();
+        const [rows] = await pool.query('SELECT * FROM cover_letter WHERE _id = ?', [id]);
 
         if (rows.length === 0) {
             return res.status(404).json({ message: 'Cover Letter no encontrada' });
@@ -404,11 +368,9 @@ export const postCoverLetter = async (req, res) => {
         if (!carta) {
             return res.status(400).json({ message: 'El campo carta es obligatorio' });
         }
-        const connection = await pool.getConnection();
-        const [result] = await connection.query('INSERT INTO cover_letter SET ?', [
+        const [result] = await pool.query('INSERT INTO cover_letter SET ?', [
             req.body
         ]);
-        connection.release();
         res.json({ id: result.insertId, carta });
     } catch (err) {
         if (err.code === 'ER_BAD_FIELD_ERROR') {
@@ -430,12 +392,10 @@ export const putCoverLetter = async (req, res) => {
             return res.status(400).json({ message: 'El campo carta es obligatorio.' });
         }
 
-        const connection = await pool.getConnection();
-        const [result] = await connection.query(
+        const [result] = await pool.query(
             'UPDATE cover_letter SET carta = ? WHERE _id = ?',
             [carta, id]
         );
-        connection.release();
 
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Cover letter no encontrada.' });
